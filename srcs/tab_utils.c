@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tab_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/29 20:21:03 by stan              #+#    #+#             */
-/*   Updated: 2022/03/30 20:37:45 by stan             ###   ########.fr       */
+/*   Created: 2022/03/30 20:34:45 by stan              #+#    #+#             */
+/*   Updated: 2022/03/30 20:38:19 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
-
-int	main(int ac, char **av)
+int	find_last_index(char *str, char to_find)
 {
-	t_game		game;
+	int		i;
+	int		index;
 
-	check_args(ac, av);
-	game = init_game();
-	free_game(game);
-	return (0);
+	i = 0;
+	if (!str)
+		return (-1);
+	index = -1;
+	while (str[i])
+	{
+		if (str[i] == to_find)
+			index = i;
+		i++;
+	}
+	return (index);
 }

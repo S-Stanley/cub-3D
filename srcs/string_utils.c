@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/29 20:21:03 by stan              #+#    #+#             */
-/*   Updated: 2022/03/30 20:37:45 by stan             ###   ########.fr       */
+/*   Created: 2022/03/30 20:33:44 by stan              #+#    #+#             */
+/*   Updated: 2022/03/30 20:33:47 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	main(int ac, char **av)
+bool	ft_strcmp(char *s1, char *s2)
 {
-	t_game		game;
+	int		i;
 
-	check_args(ac, av);
-	game = init_game();
-	free_game(game);
+	if (!s1 || !s2)
+		return (-1);
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
 	return (0);
 }
