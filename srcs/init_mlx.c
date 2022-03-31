@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/03/31 19:26:03 by acousini         ###   ########.fr       */
+/*   Created: 2022/03/31 19:40:56 by acousini          #+#    #+#             */
+/*   Updated: 2022/03/31 19:41:02 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,6 @@ void	init_info(t_info *info)
 {
 	info->height = 480;
 	info->width = 520;	
-}
-
-int	close_win_hook(t_game *game)
-{
-	// clean_struct_game(game, "success");
-	exit (0);
-	return (1);
-}
-
-int	key_press_hook(int keycode, t_game *game)
-{
-	if (keycode != KEY_DOWN || keycode != KEY_RIGHT
-		|| keycode != KEY_LEFT || keycode != KEY_UP)
-	{
-		moves(game, keycode);
-		draw_map_2d(game, -1, -1);
-	}
-	if (keycode == 65307)
-		close_win_hook(game);
-	return (0);
 }
 
 int	draw_map_2d(t_game *game, int i, int j)
