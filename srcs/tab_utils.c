@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   tab_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/08 16:12:57 by acousini          #+#    #+#             */
-/*   Updated: 2022/03/30 20:18:08 by stan             ###   ########.fr       */
+/*   Created: 2022/03/30 20:34:45 by stan              #+#    #+#             */
+/*   Updated: 2022/03/30 20:38:19 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-size_t	ft_strlen(const char *str)
+int	find_last_index(char *str, char to_find)
 {
-	int		count;
+	int		i;
+	int		index;
 
-	count = 0;
+	i = 0;
 	if (!str)
-		return (0);
-	while (str[count] != '\0')
-		count++;
-	return (count);
+		return (-1);
+	index = -1;
+	while (str[i])
+	{
+		if (str[i] == to_find)
+			index = i;
+		i++;
+	}
+	return (index);
 }

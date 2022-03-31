@@ -6,16 +6,17 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:03 by stan              #+#    #+#             */
-/*   Updated: 2022/03/29 20:52:59 by stan             ###   ########.fr       */
+/*   Updated: 2022/03/30 20:37:45 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_game		game;
 
+	check_args(ac, av);
 	game = init_game();
 	free_game(game);
 	return (0);

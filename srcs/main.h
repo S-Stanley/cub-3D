@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/03/29 20:57:16 by stan             ###   ########.fr       */
+/*   Updated: 2022/03/30 20:37:59 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdlib.h>
 # include <string.h>
 # include <stdio.h>
+# include <stdbool.h>
+# include <fcntl.h>
+# include "../libft/libft.h"
 
 # define PLAYER_DIR_NO	0
 # define PLAYER_DIR_SO	1
@@ -44,5 +47,10 @@ t_rgb	get_rbg_color(char *type);
 t_game	init_game(void);
 void	free_map(char **map);
 void	free_game(t_game game);
+
+bool	ft_strcmp(char *s1, char *s2);
+int		find_last_index(char *str, char to_find);
+
+void	check_args(int ac, char **av);
 
 #endif
