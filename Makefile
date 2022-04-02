@@ -10,7 +10,7 @@ LINK_FLAGS		= -L $(MLX_DIR) -lmlx -L $(LIBFT_DIR) -lft -framework OpenGL -framew
 SRC_DIR			= srcs
 INC_DIR			= includes
 MLX_DIR			= mlx
-LIBFT_DIR		= LIBFT
+LIBFT_DIR		= libft
 OBJ_DIR			= objs
 BONUS_DIR		= bonus
 
@@ -27,7 +27,7 @@ _SUCCESS        = [$(_GREEN)SUCCESS$(_RESET)]
 _CLEAR          = \033[2K\c
 
 ifeq ($(OS), Linux)
-	MLX_DIR = mlx_linux
+	MLX_DIR = mlx
 	IFLAGS = -I/usr/include -I$(MLX_DIR) -I$(INC_DIR) -I$(LIBFT_DIR)/includes -D LINUX=1
 	LINK_FLAGS = -L $(MLX_DIR) -lmlx_Linux -L /usr/lib -lXext -lX11 -lm -lz -L $(LIBFT_DIR) -lft
 endif
