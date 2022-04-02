@@ -64,7 +64,6 @@ fclean			:
 				@$(RM) $(NAME)
 				@$(MAKE) fclean --silent -C $(LIBFT_DIR)
 				@$(MAKE) clean --silent -C $(MLX_DIR)
-				@$(MAKE) fclean --silent -C $(BONUS_DIR)
 				@echo "$(_SUCCESS) Working directory cleaned"
 
 re				: fclean all
