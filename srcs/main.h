@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/01 18:05:25 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/02 17:26:12 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
+
 # include "../libft/libft.h"
 
 # define PLAYER_DIR_NO		0
@@ -101,14 +102,21 @@ typedef struct	s_game
 
 char	**init_map(void);
 t_rgb	get_rbg_color(char *type);
-t_game	init_game(void);
+t_game	init_game(char *filename);
 void	free_map(char **map);
 void	free_game(t_game game);
 
 bool	ft_strcmp(char *s1, char *s2);
+int		find_index(char *str, char *to_find);
+int		count_occurence(char *str, char to_count);
+char	*ft_trim(char *str, char to_trim);
+
 int		find_last_index(char *str, char to_find);
 
 void	check_args(int ac, char **av);
 
+t_game	get_texture(t_game game, char *filename);
+
+char	*get_line(int fd);
 
 #endif
