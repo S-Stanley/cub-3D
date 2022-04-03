@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/04/02 17:24:12 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/03 15:21:02 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,15 @@ t_game	init_game(char *filename)
 	game.player_dir = PLAYER_DIR_NO;
 	game.floor_color = get_rbg_color("floor");
 	game.ceil_color = get_rbg_color("ceil");
-	game.map = init_map();
-	game = get_texture(game, filename);
-	return (game);
-}
-
-void	free_map(char **map)
-{
-	int		i;
-
-	i = 0;
-	if (!map)
-		return ;
-	while (map[i])
+	game.map = parse_map(filename);
+	if (!game.map)
 	{
-		free(map[i]);
-		i++;
+		printf("Error\nMap parsing failed\n");
+		exit(1);
 	}
-	free(map);
+	game = get_texture(game, filename);
+	print_matrice(game.map);
+	return (game);
 }
 
 void	free_game(t_game game)
@@ -83,5 +74,5 @@ void	free_game(t_game game)
 		free(game.texture_we);
 	if (game.texture_ea)
 		free(game.texture_ea);
-	free_map(game.map);
+	free_matrice(game.map);
 }
