@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 16:58:09 by sserbin           #+#    #+#             */
-/*   Updated: 2022/04/02 16:58:13 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/03 17:17:55 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,22 @@ char	*ft_concat(char *s1, char *s2)
 	return (to_return);
 }
 
-void	*handle_err_get_line(char *message, char *to_free)
+void	*handle_err(char *message, char *to_free)
 {
 	if (to_free)
 		free(to_free);
 	printf("%s", message);
 	exit(1);
+}
+
+char	*get_malloc_buffer(int size, char *line)
+{
+	char	*buffer;
+
+	buffer = malloc(size);
+	if (!buffer)
+		handle_err("Error\nAllocation err reading file\n", line);
+	return (buffer);
 }
 
 char	*get_line(int fd)
@@ -56,23 +66,23 @@ char	*get_line(int fd)
 	char	*line;
 
 	line = NULL;
-	buffer = malloc(sizeof(char) * (2));
-	if (!buffer)
-		return (NULL);
 	while (true)
 	{
+		buffer = get_malloc_buffer(sizeof(char) * (2), line);
 		has_read = read(fd, buffer, 1);
 		buffer[1] = 0;
 		if (has_read == -1)
-			handle_err_get_line("Error\nError while reading file\n", buffer);
-		if (has_read == 0 || buffer[0] == '\n')
+			handle_err("Error\nError while reading file\n", buffer);
+		if (has_read == 0 || (buffer[0] == '\n' && line))
 			break ;
+		if (buffer[0] == '\n' && !line)
+		{
+			free(buffer);
+			continue ;
+		}
 		line = ft_concat(line, buffer);
 		if (!line)
-			handle_err_get_line("Error\nError while joining data file\n", NULL);
-		buffer = malloc(sizeof(char) * (2));
-		if (!buffer)
-			handle_err_get_line("Error\nAllocation err reading file\n", line);
+			handle_err("Error\nError while joining data file\n", NULL);
 	}
 	free(buffer);
 	return (line);

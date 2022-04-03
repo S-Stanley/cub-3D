@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/04/03 15:21:02 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/03 17:11:26 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_rgb	get_rbg_color(char *type)
 {
 	t_rgb	rgb;
 
-	if (strcmp(type, "floor") == 0)
+	if (ft_strcmp(type, "floor") == 0)
 	{
 		rgb.color1 = 220;
 		rgb.color2 = 100;
@@ -60,7 +60,6 @@ t_game	init_game(char *filename)
 		exit(1);
 	}
 	game = get_texture(game, filename);
-	print_matrice(game.map);
 	return (game);
 }
 

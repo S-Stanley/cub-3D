@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/03 15:01:14 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/03 16:41:32 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_game	init_game(char *filename);
 void	free_map(char **map);
 void	free_game(t_game game);
 char	**parse_map(char *filename);
+bool	is_line_map(char *line);
 
 bool	ft_strcmp(char *s1, char *s2);
 int		find_index(char *str, char *to_find);
@@ -118,7 +119,10 @@ char	**push_arr(char **arr, char *to_add);
 void	free_matrice(char **matrice);
 void	print_matrice(char **matrice);
 
+void	*handle_err(char *message, char *to_free);
+
 void	check_args(int ac, char **av);
+void	check_config_file(char *filename);
 
 t_game	get_texture(t_game game, char *filename);
 

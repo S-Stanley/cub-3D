@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 15:27:25 by sserbin           #+#    #+#             */
-/*   Updated: 2022/04/02 17:32:17 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/03 17:12:28 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,5 @@ t_game	get_texture(t_game game, char *filename)
 		exit(1);
 	}
 	verif_path_texture(game);
-	printf("%s\n", game.texture_no);
-	printf("%s\n", game.texture_so);
-	printf("%s\n", game.texture_we);
-	printf("%s\n", game.texture_ea);
 	return (game);
 }
