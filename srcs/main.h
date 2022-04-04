@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/03 16:41:32 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/04 19:03:35 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include <string.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <mlx.h>
 # include <fcntl.h>
+# include <math.h>
 
 # include "../libft/libft.h"
 
@@ -88,7 +90,8 @@ typedef struct	s_game
 	raycast	*player;
 	t_text	*wall2d;
 	t_text	*floor2d;
-	t_text	dot;
+	t_text	*dot;
+	t_info	info;
 	char	**map;
 	int		player_dir;
 	char	*texture_no;
@@ -125,6 +128,13 @@ void	check_args(int ac, char **av);
 void	check_config_file(char *filename);
 
 t_game	get_texture(t_game game, char *filename);
+
+void	init_mlx(t_game game);
+int		key_press_hook(int keycode, t_game *game);
+void	moves(t_game *game, int direction);
+int		draw_map_2d(t_game *game, int i, int j);
+
+int		close_win_hook(t_game *game);
 
 char	*get_line(int fd);
 
