@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/03 16:41:32 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/04 23:30:23 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	free_map(char **map);
 void	free_game(t_game game);
 char	**parse_map(char *filename);
 bool	is_line_map(char *line);
+t_game	get_floor_and_ceil(t_game game, char *filename);
+t_game	get_texture(t_game game, char *filename);
 
 bool	ft_strcmp(char *s1, char *s2);
 int		find_index(char *str, char *to_find);
@@ -123,8 +125,6 @@ void	*handle_err(char *message, char *to_free);
 
 void	check_args(int ac, char **av);
 void	check_config_file(char *filename);
-
-t_game	get_texture(t_game game, char *filename);
 
 char	*get_line(int fd);
 
