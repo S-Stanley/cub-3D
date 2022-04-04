@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/03/29 21:12:16 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/03 17:11:26 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_rgb	get_rbg_color(char *type)
 {
 	t_rgb	rgb;
 
-	if (strcmp(type, "floor") == 0)
+	if (ft_strcmp(type, "floor") == 0)
 	{
 		rgb.color1 = 220;
 		rgb.color2 = 100;
@@ -46,41 +46,32 @@ t_rgb	get_rbg_color(char *type)
 	return (rgb);
 }
 
-t_game	init_game(void)
+t_game	init_game(char *filename)
 {
 	t_game		game;
 
 	game.player_dir = PLAYER_DIR_NO;
-	game.texture_no = strdup("assets/texture_no.xpm");
-	game.texture_so = strdup("assets/texture_so.xpm");
-	game.texture_we = strdup("assets/texture_we.xpm");
-	game.texture_ea = strdup("assets/texture_ea.xpm");
 	game.floor_color = get_rbg_color("floor");
 	game.ceil_color = get_rbg_color("ceil");
-	game.map = init_map();
-	return (game);
-}
-
-void	free_map(char **map)
-{
-	int		i;
-
-	i = 0;
-	if (!map)
-		return ;
-	while (map[i])
+	game.map = parse_map(filename);
+	if (!game.map)
 	{
-		free(map[i]);
-		i++;
+		printf("Error\nMap parsing failed\n");
+		exit(1);
 	}
-	free(map);
+	game = get_texture(game, filename);
+	return (game);
 }
 
 void	free_game(t_game game)
 {
-	free(game.texture_no);
-	free(game.texture_so);
-	free(game.texture_we);
-	free(game.texture_ea);
-	free_map(game.map);
+	if (game.texture_no)
+		free(game.texture_no);
+	if (game.texture_so)
+		free(game.texture_so);
+	if (game.texture_we)
+		free(game.texture_we);
+	if (game.texture_ea)
+		free(game.texture_ea);
+	free_matrice(game.map);
 }
