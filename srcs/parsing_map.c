@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 14:41:52 by sserbin           #+#    #+#             */
-/*   Updated: 2022/04/03 15:45:54 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/05 20:40:14 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,50 @@ char	**parse_map(char *filename)
 	}
 	close(fd);
 	return (map);
+}
+
+bool	check_map_line(char *line, bool top_or_bottom)
+{
+	int		i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (top_or_bottom)
+		{
+			if (line[i] != '1' && line[i] != ' ')
+				return (false);
+		}
+		else
+		{
+			if (i == 0 || !line[i + 1])
+				if (line[i] != '1')
+					return (false);
+		}
+		i++;
+	}
+	return (true);
+}
+
+void	verif_map_closed(t_game game)
+{
+	int		i;
+	bool	top_or_bottom;
+
+	i = 0;
+	top_or_bottom = true;
+	while (game.map[i])
+	{
+		if (i == 0 || !game.map[i + 1])
+			top_or_bottom = true;
+		else
+			top_or_bottom = false;
+		if (!check_map_line(game.map[i], top_or_bottom))
+		{
+			free_game(game);
+			printf("Error\nMap is not closed\n");
+			exit(1);
+		}
+		i++;
+	}
 }
