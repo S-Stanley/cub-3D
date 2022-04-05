@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/04/03 17:11:26 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/04 23:40:53 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,12 @@ char	**init_map(void)
 	return (map);
 }
 
-t_rgb	get_rbg_color(char *type)
-{
-	t_rgb	rgb;
-
-	if (ft_strcmp(type, "floor") == 0)
-	{
-		rgb.color1 = 220;
-		rgb.color2 = 100;
-		rgb.color3 = 0;
-		return (rgb);
-	}
-	rgb.color1 = 225;
-	rgb.color2 = 30;
-	rgb.color3 = 0;
-	return (rgb);
-}
-
 t_game	init_game(char *filename)
 {
 	t_game		game;
 
 	game.player_dir = PLAYER_DIR_NO;
-	game.floor_color = get_rbg_color("floor");
-	game.ceil_color = get_rbg_color("ceil");
+	game = get_floor_and_ceil(game, filename);
 	game.map = parse_map(filename);
 	if (!game.map)
 	{
