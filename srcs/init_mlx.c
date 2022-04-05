@@ -6,16 +6,23 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/04 19:15:09 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:19:15 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	init_info(t_info *info)
+void	init_info(t_game *game)
 {
-	info->height = 480;
-	info->width = 520;	
+	game->info.height = 480;
+	game->info.width = 520;
+	game->player = malloc(sizeof(raycast));
+	game->player->posX = 240.00000000;
+	game->player->posY = 240.00000000;
+	game->player->dirX = 1.00000000;
+	game->player->dirY = -1.00000010;
+	game->player->planeX = 0;
+	game->player->planeY = 0.66;
 }
 
 int	draw_map_2d(t_game *game, int i, int j)
@@ -32,9 +39,9 @@ int	draw_map_2d(t_game *game, int i, int j)
 				mlx_put_image_to_window(game->mlx,
 					game->win, game->floor2d, j * 20, i * 20);
 		}
-		mlx_put_image_to_window(game->mlx,
-			game->win, game->dot, (int)game->player->posY, (int)game->player->posX);
 	}
+	mlx_put_image_to_window(game->mlx,
+		game->win, game->dot, (int)game->player->posY, (int)game->player->posX);
 	return (0);
 }
 
@@ -47,11 +54,11 @@ char	**init_map2(void)
 	map[1] = strdup("100000000000000000000001\0");
 	map[2] = strdup("100000000000000000000001\0");
 	map[3] = strdup("100000000000000000000001\0");
-	map[4] = strdup("100000111110000101010001\0");
-	map[5] = strdup("100000100010000000000001\0");
-	map[6] = strdup("100000100010000100010001\0");
-	map[7] = strdup("100000100010000000000001\0");
-	map[8] = strdup("100000110110000101010001\0");
+	map[4] = strdup("100000000000000000000001\0");
+	map[5] = strdup("100000000000000000000001\0");
+	map[6] = strdup("100000000000000000000001\0");
+	map[7] = strdup("100000000000000000000001\0");
+	map[8] = strdup("100000000000000000000001\0");
 	map[9] = strdup("100000000000000000000001\0");
 	map[10] = strdup("100000000000000000000001\0");
 	map[11] = strdup("100000000000000000000001\0");
@@ -59,13 +66,13 @@ char	**init_map2(void)
 	map[13] = strdup("100000000000000000000001\0");
 	map[14] = strdup("100000000000000000000001\0");
 	map[15] = strdup("100000000000000000000001\0");
-	map[16] = strdup("111111111000000000000001\0");
-	map[17] = strdup("110100001000000000000001\0");
-	map[18] = strdup("110000101000000000000001\0");
-	map[19] = strdup("110100001000000000000001\0");
-	map[20] = strdup("110111111000000000000001\0");
-	map[21] = strdup("110000000000000000000001\0");
-	map[22] = strdup("111111111000000000000001\0");
+	map[16] = strdup("100000000000000000000001\0");
+	map[17] = strdup("100000000000000000000001\0");
+	map[18] = strdup("100000000000000000000001\0");
+	map[19] = strdup("100000000000000000000001\0");
+	map[20] = strdup("100000000000000000000001\0");
+	map[21] = strdup("100000000000000000000001\0");
+	map[22] = strdup("100000000000000000000001\0");
 	map[23] = strdup("111111111111111111111111\0");
 	return (map);
 }
@@ -75,21 +82,27 @@ void	init_mlx(t_game game)
 	int		img_width;
 	int		img_height;
 
-	init_info(&game.info);
+	init_info(&game);
 	game.map = init_map2();
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx,
 		520, 480, "Cub3d");
-	game.player->posX = 2.00000000;
-	game.player->posY = 2.00000000;
 	game.wall2d = mlx_xpm_file_to_image(game.mlx,
 			"assets/texture_ea.xpm", &img_width, &img_height);
 	game.floor2d = mlx_xpm_file_to_image(game.mlx,
-			"assets/texture_no.xpm", &img_width, &img_height);
+			"assets/texture_we.xpm", &img_width, &img_height);
 	game.dot = mlx_xpm_file_to_image(game.mlx,
-			"assets/log.xpm", &img_width, &img_height);
+			"assets/dot.xpm", &img_width, &img_height);
 	mlx_key_hook(game.win, key_press_hook, &game);
+	// int i = 0;
+	// while (i < 24)
+	// {
+	// 	printf("%s\n", game.map[i++]);
+	// }
+	draw_map_2d(&game, -1, -1);
 	mlx_hook(game.win, 17, 1L << 17, close_win_hook, &game);
+	mlx_hook(game.win, 2, 1L << 0, key_press_hook, &game);
+	mlx_hook(game.win, 3, 1L << 1, key_release_hook, &game);
 	mlx_loop(game.mlx);
 	mlx_loop_hook(game.mlx, draw_map_2d, &game);
 }

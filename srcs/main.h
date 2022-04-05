@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/04 19:03:35 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/05 18:48:39 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,10 @@ t_game	get_texture(t_game game, char *filename);
 
 void	init_mlx(t_game game);
 int		key_press_hook(int keycode, t_game *game);
+int		key_release_hook(int keycode, t_game *game);
 void	moves(t_game *game, int direction);
 int		draw_map_2d(t_game *game, int i, int j);
-
-int		close_win_hook(t_game *game);
+int		close_win_hook(int keycode, t_game *game);
 
 char	*get_line(int fd);
 
