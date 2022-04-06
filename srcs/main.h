@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/05 18:48:39 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/06 18:13:33 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ typedef struct	s_text
 	int		height;
 }				t_text;
 
+typedef struct	text
+{
+	void	*img;
+	char	*addr;
+	int		init;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}				text;
+
 typedef struct	s_point
 {
 	float	x;
@@ -91,6 +103,7 @@ typedef struct	s_game
 	t_text	*wall2d;
 	t_text	*floor2d;
 	t_text	*dot;
+	text	pixel;
 	t_info	info;
 	char	**map;
 	int		player_dir;
@@ -134,7 +147,9 @@ int		key_press_hook(int keycode, t_game *game);
 int		key_release_hook(int keycode, t_game *game);
 void	moves(t_game *game, int direction);
 int		draw_map_2d(t_game *game, int i, int j);
+void	draw_dir(t_game *game, raycast *player);
 int		close_win_hook(int keycode, t_game *game);
+void	my_mlx_pixel_put(t_text	*data, int x, int y, int color);
 
 char	*get_line(int fd);
 

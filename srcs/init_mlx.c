@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/05 19:19:15 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/06 18:17:32 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,17 @@ void	init_info(t_game *game)
 	game->player->posX = 240.00000000;
 	game->player->posY = 240.00000000;
 	game->player->dirX = 1.00000000;
-	game->player->dirY = -1.00000010;
+	game->player->dirY = 0.00000001;
 	game->player->planeX = 0;
 	game->player->planeY = 0.66;
+}
+
+void	my_mlx_pixel_put(t_text	*data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }
 
 int	draw_map_2d(t_game *game, int i, int j)
@@ -32,16 +40,17 @@ int	draw_map_2d(t_game *game, int i, int j)
 		j = -1;
 		while (game->map[i][++j])
 		{
-			if (game->map[i][j] == '1')
-				mlx_put_image_to_window(game->mlx,
-					game->win, game->wall2d, j * 20, i * 20);
-			else if (game->map[i][j] == '0')
-				mlx_put_image_to_window(game->mlx,
-					game->win, game->floor2d, j * 20, i * 20);
+			// if (game->map[i][j] == '1')
+			// 	mlx_put_image_to_window(game->mlx,
+			// 		game->win, game->wall2d, j * 20, i * 20);
+			// else if (game->map[i][j] == '0')
+			// 	mlx_put_image_to_window(game->mlx,
+			// 		game->win, game->floor2d, j * 20, i * 20);
 		}
 	}
-	mlx_put_image_to_window(game->mlx,
-		game->win, game->dot, (int)game->player->posY, (int)game->player->posX);
+	// mlx_put_image_to_window(game->mlx,
+	// 	game->win, game->dot, (int)game->player->posX, (int)game->player->posY);
+	draw_dir(game, game->player);
 	return (0);
 }
 
@@ -86,7 +95,10 @@ void	init_mlx(t_game game)
 	game.map = init_map2();
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx,
-		520, 480, "Cub3d");
+		480, 480, "Cub3d");
+	game.pixel.img = mlx_new_image(game.mlx, 480, 480);
+	game.pixel.addr = mlx_get_data_addr(game.pixel.img, &game.pixel.bits_per_pixel, &game.pixel.line_length,
+								&game.pixel.endian);
 	game.wall2d = mlx_xpm_file_to_image(game.mlx,
 			"assets/texture_ea.xpm", &img_width, &img_height);
 	game.floor2d = mlx_xpm_file_to_image(game.mlx,
