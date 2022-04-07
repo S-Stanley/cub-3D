@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/06 18:13:33 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/07 18:15:18 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define KEY_LEFT			97
 # define KEY_RIGHT			100
 # define KEY_DOWN			115
+# define RES				480
 
 typedef struct	s_rgb
 {
@@ -65,8 +66,8 @@ typedef struct	text
 
 typedef struct	s_point
 {
-	float	x;
-	float	y;
+	int		x;
+	int		y;
 }				t_point;
 
 typedef struct	s_info
@@ -100,9 +101,9 @@ typedef struct	s_game
 	void	*mlx;
 	void	*win;
 	raycast	*player;
-	t_text	*wall2d;
-	t_text	*floor2d;
-	t_text	*dot;
+	text	wall2d;
+	text	floor2d;
+	text	dot;
 	text	pixel;
 	t_info	info;
 	char	**map;
@@ -149,7 +150,8 @@ void	moves(t_game *game, int direction);
 int		draw_map_2d(t_game *game, int i, int j);
 void	draw_dir(t_game *game, raycast *player);
 int		close_win_hook(int keycode, t_game *game);
-void	my_mlx_pixel_put(t_text	*data, int x, int y, int color);
+int		draw_map_2d(t_game *game, int i, int j);
+void	my_mlx_pixel_put(text	*data, int x, int y, int color);
 
 char	*get_line(int fd);
 

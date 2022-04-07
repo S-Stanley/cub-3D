@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/06 18:17:32 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/07 18:37:19 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_info(t_game *game)
 {
-	game->info.height = 480;
-	game->info.width = 520;
+	game->info.height = RES;
+	game->info.width = RES;
 	game->player = malloc(sizeof(raycast));
 	game->player->posX = 240.00000000;
 	game->player->posY = 240.00000000;
@@ -23,35 +23,15 @@ void	init_info(t_game *game)
 	game->player->dirY = 0.00000001;
 	game->player->planeX = 0;
 	game->player->planeY = 0.66;
+	game->player->hit = 0;
 }
 
-void	my_mlx_pixel_put(t_text	*data, int x, int y, int color)
+void	my_mlx_pixel_put(text *data, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
-}
-
-int	draw_map_2d(t_game *game, int i, int j)
-{
-	while (game->map[++i])
-	{
-		j = -1;
-		while (game->map[i][++j])
-		{
-			// if (game->map[i][j] == '1')
-			// 	mlx_put_image_to_window(game->mlx,
-			// 		game->win, game->wall2d, j * 20, i * 20);
-			// else if (game->map[i][j] == '0')
-			// 	mlx_put_image_to_window(game->mlx,
-			// 		game->win, game->floor2d, j * 20, i * 20);
-		}
-	}
-	// mlx_put_image_to_window(game->mlx,
-	// 	game->win, game->dot, (int)game->player->posX, (int)game->player->posY);
-	draw_dir(game, game->player);
-	return (0);
 }
 
 char	**init_map2(void)
@@ -67,7 +47,7 @@ char	**init_map2(void)
 	map[5] = strdup("100000000000000000000001\0");
 	map[6] = strdup("100000000000000000000001\0");
 	map[7] = strdup("100000000000000000000001\0");
-	map[8] = strdup("100000000000000000000001\0");
+	map[8] = strdup("100001111110000000000001\0");
 	map[9] = strdup("100000000000000000000001\0");
 	map[10] = strdup("100000000000000000000001\0");
 	map[11] = strdup("100000000000000000000001\0");
@@ -86,31 +66,27 @@ char	**init_map2(void)
 	return (map);
 }
 
+void			load_texture(t_game *game, text *text, char *path)
+{
+	text->img = mlx_xpm_file_to_image(game->mlx, path, &text->width, &text->height);
+	text->addr = mlx_get_data_addr(text->img, &text->bits_per_pixel,
+						&text->line_length, &text->endian);
+}
+
 void	init_mlx(t_game game)
 {
-	int		img_width;
-	int		img_height;
-
 	init_info(&game);
 	game.map = init_map2();
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx,
-		480, 480, "Cub3d");
-	game.pixel.img = mlx_new_image(game.mlx, 480, 480);
+		RES, RES, "Cub3d");
+	game.pixel.img = mlx_new_image(game.mlx, RES, RES);
 	game.pixel.addr = mlx_get_data_addr(game.pixel.img, &game.pixel.bits_per_pixel, &game.pixel.line_length,
 								&game.pixel.endian);
-	game.wall2d = mlx_xpm_file_to_image(game.mlx,
-			"assets/texture_ea.xpm", &img_width, &img_height);
-	game.floor2d = mlx_xpm_file_to_image(game.mlx,
-			"assets/texture_we.xpm", &img_width, &img_height);
-	game.dot = mlx_xpm_file_to_image(game.mlx,
-			"assets/dot.xpm", &img_width, &img_height);
+	load_texture(&game, &game.wall2d, "assets/texture_ea.xpm");
+	load_texture(&game, &game.floor2d, "assets/texture_we.xpm");
+	load_texture(&game, &game.dot, "assets/dot.xpm");
 	mlx_key_hook(game.win, key_press_hook, &game);
-	// int i = 0;
-	// while (i < 24)
-	// {
-	// 	printf("%s\n", game.map[i++]);
-	// }
 	draw_map_2d(&game, -1, -1);
 	mlx_hook(game.win, 17, 1L << 17, close_win_hook, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press_hook, &game);
