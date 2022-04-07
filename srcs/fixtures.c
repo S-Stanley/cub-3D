@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/04/04 23:40:53 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/05 20:49:45 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,60 @@ char	**init_map(void)
 	return (map);
 }
 
+void	verif_player_exist(t_game game)
+{
+	int		i;
+	int		x;
+
+	i = 0;
+	while (game.map[i])
+	{
+		x = 0;
+		while (game.map[i][x])
+		{
+			if (game.map[i][x] == 'N'
+				|| game.map[i][x] == 'S'
+				|| game.map[i][x] == 'E'
+				|| game.map[i][x] == 'W')
+				return ;
+			x++;
+		}
+		i++;
+	}
+	free_game(game);
+	printf("Error\nDid not found player on map\n");
+	exit(1);
+}
+
+void	verif_map_config(t_game game)
+{
+	int		i;
+	int		x;
+
+	i = 0;
+	while (game.map[i])
+	{
+		x = 0;
+		while (game.map[i][x])
+		{
+			if (game.map[i][x] != 'N'
+				&& game.map[i][x] != 'S'
+				&& game.map[i][x] != 'E'
+				&& game.map[i][x] != 'W'
+				&& game.map[i][x] != '1'
+				&& game.map[i][x] != '0'
+				&& game.map[i][x] != ' ')
+			{
+				free_game(game);
+				printf("Error\nUnexpected char in map\n");
+				exit(1);
+			}
+			x++;
+		}
+		i++;
+	}
+}
+
 t_game	init_game(char *filename)
 {
 	t_game		game;
@@ -42,6 +96,9 @@ t_game	init_game(char *filename)
 		exit(1);
 	}
 	game = get_texture(game, filename);
+	verif_map_config(game);
+	verif_map_closed(game);
+	verif_player_exist(game);
 	return (game);
 }
 

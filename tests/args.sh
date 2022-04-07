@@ -31,7 +31,7 @@ echo -en "${NC}5) wrong access right do not exist: "
 chmod +r toparse.cub
 
 echo -en "${NC}6) good information: "
-(./cub3D toparse.cub >> /dev/null) && echo -e "${GREEN} OK" || echo -e "${RED}KO"
+(./cub3D maps/valid_map.cub >> /dev/null) && echo -e "${GREEN} OK" || echo -e "${RED}KO"
 
 chmod +w toparse.cub
 rm toparse.cub

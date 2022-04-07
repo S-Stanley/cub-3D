@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/04 23:30:23 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/05 20:40:05 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	free_map(char **map);
 void	free_game(t_game game);
 char	**parse_map(char *filename);
 bool	is_line_map(char *line);
+void	verif_map_closed(t_game game);
 t_game	get_floor_and_ceil(t_game game, char *filename);
 t_game	get_texture(t_game game, char *filename);
 
