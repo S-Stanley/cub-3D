@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:53:08 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/07 18:37:05 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/08 17:54:04 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	draw_dir(t_game *game, raycast *player)
 	float	tmp4;
 	float	tmpRayX2;
 	float	tmpRayY2;
-	
-	i = -1;
-	tmpRayX = player->posX;
-	tmpRayY = player->posY;
-	while (++i < RES)
+
+	i = 0;
+	tmpRayX = player->posY;
+	tmpRayY = player->posX;
+	while (++i <= RES)
 	{
 		tmpRayX2 = game->player->posX;
 		tmpRayY2 = game->player->posY;
@@ -40,20 +40,23 @@ void	draw_dir(t_game *game, raycast *player)
 			tmp2 = (tmpRayY2 + tmpRayY * 1) / 20;
 			tmp3 = tmpRayX2 / 20;
 			tmp4 = tmpRayY2 / 20;
-			if (game->map[(int)tmp4][(int)tmp1] == '0')
+			if (game->map[(int)tmp1][(int)tmp4] == '0')
 				tmpRayX2 += tmpRayX * 1;
 			else
 				player->hit = 1;
-			if (game->map[(int)tmp2][(int)tmp3] == '0')
+			if (game->map[(int)tmp3][(int)tmp2] == '0')
 				tmpRayY2 += tmpRayY * 1;
 			else
 				player->hit = 1;
-			if (player->hit == 0 && i == RES / 2)
-				my_mlx_pixel_put(&game->pixel, tmpRayY2, tmpRayX2, 0x008000);
+			if (player->hit == 0 && (i >= 1 && i <= 10))
+				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, BLUE);
+			else if (player->hit == 0 && i == RES / 2)
+				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, GREY);
 			else if (player->hit == 0)
-				my_mlx_pixel_put(&game->pixel, tmpRayY2, tmpRayX2, 0xFF0000);
+				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, 0xFF0000);
 		}
 		player->hit = 0;
 	}
-	mlx_put_image_to_window(game->mlx, game->win, game->pixel.img, 0, 0);
+	puts("lol");
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 480, 0);
 }

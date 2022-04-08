@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:30:02 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/05 18:50:43 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/08 18:15:04 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	key_press_hook(int keycode, t_game *game)
 	{
 		moves(game, keycode);
 		draw_map_2d(game, -1, -1);
+		raycasting(game, game->player);
 	}
 	if (keycode == 65307)
 	{
@@ -45,6 +46,7 @@ int	key_release_hook(int keycode, t_game *game)
 	{
 		moves(game, keycode);
 		draw_map_2d(game, -1, -1);
+		raycasting(game, game->player);
 	}
 	return (0);
 }

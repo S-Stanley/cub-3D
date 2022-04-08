@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/07 18:15:18 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/08 17:32:51 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@
 # define KEY_RIGHT			100
 # define KEY_DOWN			115
 # define RES				480
+# define GREEN				0x008000
+# define BLUE				0x0000FF
+# define WHITE				0xFFFFFF
+# define BLACK				0x000000
+# define RED				0xFF0000
+# define GREY				0x808080
 
 typedef struct	s_rgb
 {
@@ -86,6 +92,9 @@ typedef struct	raycast
 	float	planeY;
 	float	sideDistX;
 	float	sideDistY;
+	float	deltaDistX;
+	float	deltaDistY;
+	float	perpWallDist;
 	float	rayDirX;
 	float	rayDirY;
 	float	cameraX;
@@ -105,6 +114,7 @@ typedef struct	s_game
 	text	floor2d;
 	text	dot;
 	text	pixel;
+	text	minimap;
 	t_info	info;
 	char	**map;
 	int		player_dir;
@@ -155,6 +165,8 @@ void	draw_dir(t_game *game, raycast *player);
 int		close_win_hook(int keycode, t_game *game);
 int		draw_map_2d(t_game *game, int i, int j);
 void	my_mlx_pixel_put(text	*data, int x, int y, int color);
+void	raycasting(t_game *game, raycast *player);
+
 char	*get_line(int fd);
 
 #endif
