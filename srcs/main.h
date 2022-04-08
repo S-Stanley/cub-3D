@@ -124,6 +124,9 @@ void	free_map(char **map);
 void	free_game(t_game game);
 char	**parse_map(char *filename);
 bool	is_line_map(char *line);
+void	verif_map_closed(t_game game);
+t_game	get_floor_and_ceil(t_game game, char *filename);
+t_game	get_texture(t_game game, char *filename);
 
 bool	ft_strcmp(char *s1, char *s2);
 int		find_index(char *str, char *to_find);
@@ -152,7 +155,6 @@ void	draw_dir(t_game *game, raycast *player);
 int		close_win_hook(int keycode, t_game *game);
 int		draw_map_2d(t_game *game, int i, int j);
 void	my_mlx_pixel_put(text	*data, int x, int y, int color);
-
 char	*get_line(int fd);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/04/03 17:11:26 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/05 20:49:45 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,58 @@ char	**init_map(void)
 	return (map);
 }
 
-t_rgb	get_rbg_color(char *type)
+void	verif_player_exist(t_game game)
 {
-	t_rgb	rgb;
+	int		i;
+	int		x;
 
-	if (ft_strcmp(type, "floor") == 0)
+	i = 0;
+	while (game.map[i])
 	{
-		rgb.color1 = 220;
-		rgb.color2 = 100;
-		rgb.color3 = 0;
-		return (rgb);
+		x = 0;
+		while (game.map[i][x])
+		{
+			if (game.map[i][x] == 'N'
+				|| game.map[i][x] == 'S'
+				|| game.map[i][x] == 'E'
+				|| game.map[i][x] == 'W')
+				return ;
+			x++;
+		}
+		i++;
 	}
-	rgb.color1 = 225;
-	rgb.color2 = 30;
-	rgb.color3 = 0;
-	return (rgb);
+	free_game(game);
+	printf("Error\nDid not found player on map\n");
+	exit(1);
+}
+
+void	verif_map_config(t_game game)
+{
+	int		i;
+	int		x;
+
+	i = 0;
+	while (game.map[i])
+	{
+		x = 0;
+		while (game.map[i][x])
+		{
+			if (game.map[i][x] != 'N'
+				&& game.map[i][x] != 'S'
+				&& game.map[i][x] != 'E'
+				&& game.map[i][x] != 'W'
+				&& game.map[i][x] != '1'
+				&& game.map[i][x] != '0'
+				&& game.map[i][x] != ' ')
+			{
+				free_game(game);
+				printf("Error\nUnexpected char in map\n");
+				exit(1);
+			}
+			x++;
+		}
+		i++;
+	}
 }
 
 t_game	init_game(char *filename)
@@ -51,8 +88,7 @@ t_game	init_game(char *filename)
 	t_game		game;
 
 	game.player_dir = PLAYER_DIR_NO;
-	game.floor_color = get_rbg_color("floor");
-	game.ceil_color = get_rbg_color("ceil");
+	game = get_floor_and_ceil(game, filename);
 	game.map = parse_map(filename);
 	if (!game.map)
 	{
@@ -60,6 +96,9 @@ t_game	init_game(char *filename)
 		exit(1);
 	}
 	game = get_texture(game, filename);
+	verif_map_config(game);
+	verif_map_closed(game);
+	verif_player_exist(game);
 	return (game);
 }
 
