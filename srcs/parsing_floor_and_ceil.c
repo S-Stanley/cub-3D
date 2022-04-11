@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 23:17:17 by stan              #+#    #+#             */
-/*   Updated: 2022/04/04 23:50:28 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/10 09:25:39 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_rgb	get_rgb_from_string(char *line, char type)
 	rgb.color2 = ft_atoi(colors[1]);
 	rgb.color3 = ft_atoi(colors[2]);
 	free_matrice(colors);
+	free(line);
 	return (rgb);
 }
 
