@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/08 18:23:31 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/11 18:32:53 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	init_info(t_game *game)
 	game->player = malloc(sizeof(raycast));
 	game->player->posX = 320.00000000;
 	game->player->posY = 280.00000000;
-	game->player->dirX = -0.790968;
-	game->player->dirY = -0.611858;
+	game->player->dirX = -1;
+	game->player->dirY = 0;
 	game->player->planeX = 0;
-	game->player->planeY = 0.66;
+	game->player->planeY = 0.666666;
 	game->player->hit = 0;
 }
 

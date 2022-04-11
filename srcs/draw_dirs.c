@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:53:08 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/08 17:54:04 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/11 20:14:44 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	draw_dir(t_game *game, raycast *player)
 			tmp2 = (tmpRayY2 + tmpRayY * 1) / 20;
 			tmp3 = tmpRayX2 / 20;
 			tmp4 = tmpRayY2 / 20;
-			if (game->map[(int)tmp1][(int)tmp4] == '0')
+			if (game->map[(int)tmp4][(int)tmp1] == '0')
 				tmpRayX2 += tmpRayX * 1;
 			else
 				player->hit = 1;
-			if (game->map[(int)tmp3][(int)tmp2] == '0')
+			if (game->map[(int)tmp2][(int)tmp3] == '0')
 				tmpRayY2 += tmpRayY * 1;
 			else
 				player->hit = 1;
@@ -52,11 +52,13 @@ void	draw_dir(t_game *game, raycast *player)
 				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, BLUE);
 			else if (player->hit == 0 && i == RES / 2)
 				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, GREY);
+			else if (player->hit == 0 && (i >= RES - 10 && i <= RES))
+				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, GREY);
 			else if (player->hit == 0)
 				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, 0xFF0000);
 		}
 		player->hit = 0;
 	}
-	puts("lol");
+	// puts("lol");
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 480, 0);
 }

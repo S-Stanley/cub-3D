@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:56:14 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/08 18:15:09 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:26:13 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static void		draw_cube(t_point *pos, int size, int color, text *img)
 		while (x < size)
 		{
 			if (x >= size - 1 || y >= size - 1 || x < 1 || y < 1)
-				my_mlx_pixel_put(img, y + pos->x, x + pos->y, 0xd3d3d3);
+				my_mlx_pixel_put(img, x + pos->y, y + pos->x, 0xd3d3d3);
 			else
-				my_mlx_pixel_put(img, y + pos->x, x + pos->y, color);
+				my_mlx_pixel_put(img, x + pos->y, y + pos->x, color);
 			x++;
 		}
 		x = 0;

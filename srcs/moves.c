@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:23:03 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/08 17:54:38 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/11 18:27:15 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	move(t_game *game, t_point player_pos, float dir)
 	float	tmp4 = game->player->posY / 20;
 	if (game->map[(int)tmp4][(int)tmp1] == '0') 
 	{
-		puts(" x ");
+		// puts(" x ");
 		game->player->posX += game->player->dirX * dir;
 	}
     if (game->map[(int)tmp2][(int)tmp3] == '0')
 	{
-		puts(" y ");
+		// puts(" y ");
 		game->player->posY += game->player->dirY * dir;
 	}
 	printf("  %f %f %f %f %f %f\n", game->player->posX, game->player->posY, game->player->dirX, game->player->dirY, game->player->planeX, game->player->planeY);
