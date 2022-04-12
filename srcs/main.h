@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/12 14:44:40 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/12 16:34:29 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ typedef struct	raycast
 {
 	float	posX;
 	float	posY;
-	float	dirX;
-	float	dirY;
+	float	dirX; // tmp
+	float	dirY; // tmp
 	float	planeX;
 	float	planeY;
 	float	sideDistX;
@@ -104,8 +104,8 @@ typedef struct	raycast
 	int		stepY;
 	int		hit;
 	int		sideHit;
-	float	hitX[RES];
-	float	hitY[RES];
+	float	hitX[RES]; // tmp
+	float	hitY[RES]; // tmp
 }				raycast;
 
 typedef struct	s_game 
@@ -167,7 +167,6 @@ int		draw_map_2d(t_game *game, int i, int j);
 void	draw_dir(t_game *game, raycast *player);
 int		close_win_hook(int keycode, t_game *game);
 void	init_sidedist(raycast *player, int mapX, int mapY);
-void	perpwallcalc(t_game *game, raycast *player, int side, int i, float diff);
 int		draw_map_2d(t_game *game, int i, int j);
 void	my_mlx_pixel_put(text	*data, int x, int y, int color);
 void	raycasting(t_game *game, raycast *player);

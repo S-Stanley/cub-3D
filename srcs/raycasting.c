@@ -6,38 +6,45 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:51:20 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/12 15:58:06 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/12 17:06:37 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-static void	verline(t_game *game, int x, int start, int end, int color, int diff)
+static void	verline(t_game *game, int pos[3], int color, int diff)
 {
 	int		y;
+	int		start;
+	int		end;
+	int		x;
 
+	start = pos[0];
+	end = pos[1];
+	x = pos[2];
 	y = -1;
-	printf("diff is %d for i %d\n", diff, x);
 	while (++y < start)
-	{
-		// printf("y = %d x = %d start %d end %d\n", y, x, start, end);
 		my_mlx_pixel_put(&game->pixel, x, y, BLACK);
-	}
-	while (y++ < end)
+	while (y < end)
 	{
-		if (x == RES / 2)
-			my_mlx_pixel_put(&game->pixel, x, y, GREEN);
-		else if ((y >= start && y <= start + 4) || (y >= end - 4 && y <= end) || diff == 1)
+		if ((y >= start && y <= start + 2) || (y >= end - 2 && y <= end) || diff == 1)
 			my_mlx_pixel_put(&game->pixel, x, y, GREY);
 		else
 			my_mlx_pixel_put(&game->pixel, x, y, color);
+		y++;
 	}
-	while (++y < RES)
+	while (y < RES)
+	{
 		my_mlx_pixel_put(&game->pixel, x, y, BLUE);
+		y++;
+	}
 }
 
-void	init_sidedist(raycast *player, int mapX, int mapY)
+static void	init_sidedist_fov(raycast *player, int mapX, int mapY, int i)
 {
+	player->cameraX = 2 * (float)i / (float)RES - 1;
+	player->rayDirX = player->dirX + player->planeX * player->cameraX;
+	player->rayDirY = player->dirY + player->planeY * player->cameraX;
 	player->deltaDistX = fabsf(1 / player->rayDirX);
 	player->deltaDistY = fabsf(1 / player->rayDirY);
 	if (player->rayDirX < 0)
@@ -62,52 +69,24 @@ void	init_sidedist(raycast *player, int mapX, int mapY)
 	}
 }
 
-void	init_touchdist(raycast *player, int mapX, int mapY)
-{
-	player->deltaDistX = fabsf(1 / player->rayDirX);
-	player->deltaDistY = fabsf(1 / player->rayDirY);
-	if (player->rayDirX < 0)
-	{
-		player->stepX = -1;
-		player->sideDistX = ((player->posX / 20) - mapX) * player->deltaDistX;
-	}
-	else
-	{
-		player->stepX = 1;
-		player->sideDistX = (mapX + 1.0 - (player->posX / 20)) * player->deltaDistX;
-	}
-	if (player->rayDirY < 0)
-	{
-		player->stepY = -1;
-		player->sideDistY = ((player->posY / 20) - mapY) * player->deltaDistY;
-	}
-	else
-	{
-		player->stepY = 1;
-		player->sideDistY = (mapY + 1.0 - (player->posY / 20)) * player->deltaDistY;
-	}
-}
-
-void	perpwallcalc(t_game *game, raycast *player, int side, int i, float diff)
+static void	perpwallcalc(t_game *game, raycast *player, int side, int i, float diff)
 {
 	int 	lineHeight;
-	int 	drawEnd;
-	int 	drawStart;
-	// float	wallX;
-	// int 	texX;
+	int		positions[3];
 	
+	positions[2] = RES - i;
+	(void)side;
 	if (side == 0)
 		player->perpWallDist = (player->sideDistX - player->deltaDistX);
 	else
 		player->perpWallDist = (player->sideDistY - player->deltaDistY);
-	// printf("sideX : %f  sideY : %f  deltaX : %f  deltaY : %f\n", player->sideDistX, player->sideDistY, player->deltaDistX, player->deltaDistY);
 	lineHeight = (int)(RES / player->perpWallDist);
-	drawStart = -lineHeight / 2 + RES / 2;
-	if (drawStart < 0)
-		drawStart = 0;
-	drawEnd = lineHeight / 2 + RES / 2;
-	if (drawEnd >= RES)
-		drawEnd = RES - 1;
+	positions[0] = -lineHeight / 2 + RES / 2;
+	if (positions[0] < 0)
+		positions[0] = 0;
+	positions[1] = lineHeight / 2 + RES / 2;
+	if (positions[1] >= RES)
+		positions[1] = RES - 1;
 	// if (i == 0)
 	// 	printf("pour 0   %f %f %f %f %f %d\n", player->perpWallDist, player->sideDistY, player->deltaDistY, player->sideDistX, player->deltaDistX, side);
 	// if (i == RES / 2)
@@ -125,66 +104,44 @@ void	perpwallcalc(t_game *game, raycast *player, int side, int i, float diff)
 	// 	texX = texWidth - texX - 1;
 	// if (side == 1 && rayDirY < 0)
 	// 	texX = texWidth - texX - 1;
-	verline(game, RES - i, drawStart, drawEnd, RED, diff);
+	verline(game, positions, RED, diff);
 }
 
 void	raycasting(t_game *game, raycast *player)
 {
 	int		i;
-	int	mapX;
-	int	mapY;
+	int		mapX;
+	int		mapY;
 	int 	side;
+	int 	diff; 
 
 	side = 0;
 	i = -1;
-	// printf("sideX : %f sideY : %f deltX : %f deltY : %f\n", game->player->sideDistX, game->player->sideDistY,
-	// 	game->player->deltaDistX, game->player->deltaDistY);
 	while (++i < RES)
 	{
 		mapX = (int)player->posX;
 		mapY = (int)player->posY;
-		float	fMapX = player->posX;
-		float	fMapY = player->posY;
-		player->cameraX = 2 * (float)i / (float)RES - 1;
-		player->rayDirX = player->dirX + player->planeX * player->cameraX;
-		player->rayDirY = player->dirY + player->planeY * player->cameraX;
-		init_sidedist(player, (int)player->posX / 20, (int)player->posY / 20);
-		// if (i == RES / 2)
-			// printf("sideX : %f\tsideY : %f\tdeltaX : %f\tdeltaY : %f\n", player->sideDistX, player->sideDistY, player->deltaDistX, player->deltaDistY);
+		init_sidedist_fov(player, (int)player->posX / 20, (int)player->posY / 20, i);
 		while (player->hit == 0)
 		{
+			side = player->sideDistX >= player->sideDistY;
 			if (player->sideDistX < player->sideDistY)
 			{
 				player->sideDistX += player->deltaDistX;
 				mapX += (int)(player->stepX * 20);
-				fMapX += (player->stepX * 20);
-				side = 0;
 			}
 			else
 			{
 				player->sideDistY += player->deltaDistY;
 				mapY += (int)(player->stepY * 20);
-				fMapY += (player->stepY * 20);
-				side = 1;
 			}
-			if (game->map[(int)(mapY / 20)][(int)(mapX / 20)] == '1')
-				player->hit = 1;
+			player->hit = game->map[(int)(mapY / 20)][(int)(mapX / 20)] == '1';
 		}
-		// if (i == RES / 2)
-		// 	printf("hitY %f\thitX %f\n", hitY[i], hitX[i]);
-		int diff = 0;
+		diff = 0;
 		if ((side == 0 && ((int)player->hitY[i] % 20 == 0 || (int)player->hitY[i] % 20 == 19)) ||
 				(side == 1 && ((int)player->hitX[i] % 20 == 0 || (int)player->hitX[i] % 20 == 19)))
-			{
 				diff = 1;
-				printf("\n\n\n\t\tYOUPI\n\n\n");
-			}
-		// if (i == RES / 2)
-		// 	printf("hitY %% 20 = %d \t\t hitX %% 20 = %d \n", (int)player->hitY[i] % 20, (int)player->hitX[i] % 20);
 		perpwallcalc(game, player, side, i, diff);
 		player->hit = 0;
 	}
-	// printf("avant window");
-	mlx_put_image_to_window(game->mlx, game->win, game->pixel.img, 0, 0);
-	// printf("\n apres");
 }
