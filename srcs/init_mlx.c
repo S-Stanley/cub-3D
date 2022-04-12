@@ -6,13 +6,13 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/12 17:06:56 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/12 17:47:23 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	init_info(t_game *game)
+static void	init_info(t_game *game)
 {
 	game->info.height = RES;
 	game->info.width = RES;

@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:53:08 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/12 17:10:09 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/12 18:26:13 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	draw_dir(t_game *game, raycast *player)
 			else
 				player->hit = 1;
 			my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, 0xFF0000);
+			if (i == RES / 2 | i + 1 == RES /2)
+				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, 0xFFFFFF);
 		}
 		player->hit = 0;
 		player->hitY[i] = tmpRayY2;

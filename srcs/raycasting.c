@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:51:20 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/12 17:06:37 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/12 19:07:12 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,10 @@ static void	perpwallcalc(t_game *game, raycast *player, int side, int i, float d
 {
 	int 	lineHeight;
 	int		positions[3];
+	float	wallX;
+	int		texx;
 	
 	positions[2] = RES - i;
-	(void)side;
 	if (side == 0)
 		player->perpWallDist = (player->sideDistX - player->deltaDistX);
 	else
@@ -87,6 +88,21 @@ static void	perpwallcalc(t_game *game, raycast *player, int side, int i, float d
 	positions[1] = lineHeight / 2 + RES / 2;
 	if (positions[1] >= RES)
 		positions[1] = RES - 1;
+	if (side == 0)
+		wallX = (player->posY+ player->perpWallDist * player->rayDirY);
+	else
+		wallX = (player->posX + player->perpWallDist * player->rayDirX);
+	wallX -= floor((wallX));
+	texx = (int)(wallX * 20);
+	if (side == 0 && player->rayDirX > 0) 
+		texx = 20 - texx - 1;
+	if (side == 1 && player->rayDirY < 0) 
+		texx = 20 - texx - 1;
+	if ( i == RES/2)
+	{
+		printf(" hitX %f ---     hitY %f ---\n", player->hitX[i], player->hitY[i]);
+		printf("wallX %d ---    wallX %f ---   pour i == %d \n", texx, wallX, i);
+	}
 	// if (i == 0)
 	// 	printf("pour 0   %f %f %f %f %f %d\n", player->perpWallDist, player->sideDistY, player->deltaDistY, player->sideDistX, player->deltaDistX, side);
 	// if (i == RES / 2)
@@ -117,7 +133,7 @@ void	raycasting(t_game *game, raycast *player)
 
 	side = 0;
 	i = -1;
-	while (++i < RES)
+	while (++i <= RES)
 	{
 		mapX = (int)player->posX;
 		mapY = (int)player->posY;
@@ -140,7 +156,7 @@ void	raycasting(t_game *game, raycast *player)
 		diff = 0;
 		if ((side == 0 && ((int)player->hitY[i] % 20 == 0 || (int)player->hitY[i] % 20 == 19)) ||
 				(side == 1 && ((int)player->hitX[i] % 20 == 0 || (int)player->hitX[i] % 20 == 19)))
-				diff = 1;
+			diff = 1;
 		perpwallcalc(game, player, side, i, diff);
 		player->hit = 0;
 	}
