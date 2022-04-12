@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/11 18:40:28 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:44:40 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define BLACK				0x000000
 # define RED				0xFF0000
 # define GREY				0x808080
+
 
 typedef struct	s_rgb
 {
@@ -103,6 +104,8 @@ typedef struct	raycast
 	int		stepY;
 	int		hit;
 	int		sideHit;
+	float	hitX[RES];
+	float	hitY[RES];
 }				raycast;
 
 typedef struct	s_game 

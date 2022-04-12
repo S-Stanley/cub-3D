@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/11 18:32:53 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:45:19 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_info(t_game *game)
 {
 	game->info.height = RES;
 	game->info.width = RES;
-	game->player = malloc(sizeof(raycast));
+	game->player = malloc((sizeof (raycast)) + (2 * RES - 2) * sizeof (float));
 	game->player->posX = 320.00000000;
 	game->player->posY = 280.00000000;
 	game->player->dirX = -1;

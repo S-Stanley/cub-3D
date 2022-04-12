@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:53:08 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/11 20:14:44 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/12 14:54:11 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void	draw_dir(t_game *game, raycast *player)
 	float	tmpRayY2;
 
 	i = 0;
-	tmpRayX = player->posY;
-	tmpRayY = player->posX;
+	
 	while (++i <= RES)
 	{
 		tmpRayX2 = game->player->posX;
@@ -48,16 +47,21 @@ void	draw_dir(t_game *game, raycast *player)
 				tmpRayY2 += tmpRayY * 1;
 			else
 				player->hit = 1;
-			if (player->hit == 0 && (i >= 1 && i <= 10))
-				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, BLUE);
-			else if (player->hit == 0 && i == RES / 2)
-				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, GREY);
-			else if (player->hit == 0 && (i >= RES - 10 && i <= RES))
+			if (player->hit == 0 && i == RES / 2)
 				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, GREY);
 			else if (player->hit == 0)
 				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, 0xFF0000);
+			// if (player->hit == 0 && (i >= 1 && i <= 10))
+			// 	my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, BLUE);
+			// else if (player->hit == 0 && (i >= RES - 10 && i <= RES))
+			// 	my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, GREY);
 		}
 		player->hit = 0;
+		player->hitY[i] = tmpRayY2;
+		player->hitX[i] = tmpRayX2;
+		// hitX[i] = tmp3;
+		if (i == RES / 2)
+			printf("hitY %f\thitX %f\n", player->hitY[i], player->hitX[i]);
 	}
 	// puts("lol");
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 480, 0);
