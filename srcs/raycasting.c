@@ -6,11 +6,31 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:51:20 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/12 19:07:12 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/13 17:35:04 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+static void	walline(t_game *game, int *pos, unsigned int color[480][480], int sidehit)
+{
+	int		y;
+	int		start;
+	int		end;
+	int		x;
+
+	(void)sidehit;
+	(void)start;
+	y = pos[0];
+	end = pos[1];
+	x = pos[2];
+	// printf("my color is %u\n", color[y][x]);
+	while (y < end)
+	{
+		my_mlx_pixel_put(&game->pixel, x, y, color[y][x]);
+		y++;
+	}
+}
 
 static void	verline(t_game *game, int pos[3], int color, int diff)
 {
@@ -19,6 +39,8 @@ static void	verline(t_game *game, int pos[3], int color, int diff)
 	int		end;
 	int		x;
 
+	(void)color;
+	(void)diff;
 	start = pos[0];
 	end = pos[1];
 	x = pos[2];
@@ -27,10 +49,10 @@ static void	verline(t_game *game, int pos[3], int color, int diff)
 		my_mlx_pixel_put(&game->pixel, x, y, BLACK);
 	while (y < end)
 	{
-		if ((y >= start && y <= start + 2) || (y >= end - 2 && y <= end) || diff == 1)
-			my_mlx_pixel_put(&game->pixel, x, y, GREY);
-		else
-			my_mlx_pixel_put(&game->pixel, x, y, color);
+		// if ((y >= start && y <= start + 2) || (y >= end - 2 && y <= end) || diff == 1)
+		// 	my_mlx_pixel_put(&game->pixel, x, y, GREY);
+		// else
+		// 	my_mlx_pixel_put(&game->pixel, x, y, color);
 		y++;
 	}
 	while (y < RES)
@@ -71,11 +93,17 @@ static void	init_sidedist_fov(raycast *player, int mapX, int mapY, int i)
 
 static void	perpwallcalc(t_game *game, raycast *player, int side, int i, float diff)
 {
-	int 	lineHeight;
-	int		positions[3];
-	float	wallX;
-	int		texx;
-	
+	int 			lineHeight;
+	int				positions[3];
+	float			wallX;
+	float			step;
+	float			texPos;
+	int				texx;
+	int 			texy;
+	int				color;
+	int				y;
+	static unsigned int	buffer[RES][RES];
+
 	positions[2] = RES - i;
 	if (side == 0)
 		player->perpWallDist = (player->sideDistX - player->deltaDistX);
@@ -89,38 +117,50 @@ static void	perpwallcalc(t_game *game, raycast *player, int side, int i, float d
 	if (positions[1] >= RES)
 		positions[1] = RES - 1;
 	if (side == 0)
-		wallX = (player->posY+ player->perpWallDist * player->rayDirY);
+		wallX = player->posY / TILERES + player->perpWallDist * player->rayDirY;
 	else
-		wallX = (player->posX + player->perpWallDist * player->rayDirX);
-	wallX -= floor((wallX));
-	texx = (int)(wallX * 20);
-	if (side == 0 && player->rayDirX > 0) 
-		texx = 20 - texx - 1;
-	if (side == 1 && player->rayDirY < 0) 
-		texx = 20 - texx - 1;
-	if ( i == RES/2)
+		wallX = player->posX / TILERES + player->perpWallDist * player->rayDirX;
+	wallX -= floorf((wallX));
+	texx = (int)(wallX * (float)TILERES);
+	if (side == 0 && player->rayDirX > 0)
+		texx = TILERES - texx - 1;
+	if (side == 1 && player->rayDirY < 0)
+		texx = TILERES - texx - 1;
+	step = 1.0 * TILERES / lineHeight;
+	texPos = (positions[0] - RES / 2 + lineHeight / 2) * step;
+	y = positions[0];
+	if (positions[2] == RES / 2)
+		printf("texpos sans step : %d  step : %d  texPos : %f\n",(positions[0] - RES / 2 + lineHeight / 2), 1 * TILERES / lineHeight, texPos);
+	while (y < positions[1])
 	{
-		printf(" hitX %f ---     hitY %f ---\n", player->hitX[i], player->hitY[i]);
-		printf("wallX %d ---    wallX %f ---   pour i == %d \n", texx, wallX, i);
+		texy = (int)texPos & (TILERES - 1);
+		texPos += step;	
+		if (player->sidehit == 0)
+			color = my_mlx_pixel_get(game->no, texPos, texy);
+		if (player->sidehit == 1)
+			color = my_mlx_pixel_get(game->so, texPos, texy);
+		if (player->sidehit == 2)
+			color = my_mlx_pixel_get(game->we, texPos, texy);
+		if (player->sidehit == 3)
+			color = my_mlx_pixel_get(game->ea, texPos, texy);
+		buffer[y][i] = color;
+		y++;
 	}
-	// if (i == 0)
-	// 	printf("pour 0   %f %f %f %f %f %d\n", player->perpWallDist, player->sideDistY, player->deltaDistY, player->sideDistX, player->deltaDistX, side);
-	// if (i == RES / 2)
-	// 	printf("pour 240   %f %f %f %d\n", player->perpWallDist, player->sideDistY, player->deltaDistY, side);
-	// if (i == RES - 1)
-		// printf("pour RES   %f %f %f %f %f %d\n", player->perpWallDist, player->sideDistY, player->deltaDistY, player->sideDistX, player->deltaDistX, side);
-	// printf("start %d end %d perpWD %f lineH %d\n", drawStart, drawEnd, player->perpWallDist, lineHeight);
-	// if (side == 0)
-	// 	wallX = player->posY + player->perpWallDist * player->rayDirY;
-	// else
-	// 	wallX = player->posX + player->perpWallDist * player->rayDirX;
-	// wallX -= floor((wallX));
-	// texX = (int)(wallX * (float)texWidth);
-	// if (side == 0 && rayDirX > 0)
-	// 	texX = texWidth - texX - 1;
-	// if (side == 1 && rayDirY < 0)
-	// 	texX = texWidth - texX - 1;
+	walline(game, positions, buffer, player->sidehit);
 	verline(game, positions, RED, diff);
+}
+
+
+static void	init_cardinal(raycast *player, int side)
+{
+	if (player->rayDirY < 0 && side == 0)
+		player->cardinal = NO;
+	else
+		player->cardinal = SO;
+	if (player->rayDirX > 0 && side == 1)
+		player->cardinal = EA;
+	else
+		player->cardinal = WE;
 }
 
 void	raycasting(t_game *game, raycast *player)
@@ -157,6 +197,7 @@ void	raycasting(t_game *game, raycast *player)
 		if ((side == 0 && ((int)player->hitY[i] % 20 == 0 || (int)player->hitY[i] % 20 == 19)) ||
 				(side == 1 && ((int)player->hitX[i] % 20 == 0 || (int)player->hitX[i] % 20 == 19)))
 			diff = 1;
+		init_cardinal(player, side);
 		perpwallcalc(game, player, side, i, diff);
 		player->hit = 0;
 	}

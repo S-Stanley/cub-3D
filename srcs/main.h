@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/12 16:34:29 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/13 17:07:40 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,16 @@
 # define PLAYER_DIR_SO		1
 # define PLAYER_DIR_WE		2
 # define PLAYER_DIR_EA		3
+# define NO					0
+# define SO					1
+# define EA					2
+# define WE					3
 # define KEY_UP				119
 # define KEY_LEFT			97
 # define KEY_RIGHT			100
 # define KEY_DOWN			115
 # define RES				480
+# define TILERES			20
 # define GREEN				0x008000
 # define BLUE				0x0000FF
 # define WHITE				0xFFFFFF
@@ -100,10 +105,11 @@ typedef struct	raycast
 	float	rayDirY;
 	float	cameraX;
 	float	cameraY;
+	int		cardinal;
 	int		stepX;
 	int		stepY;
 	int		hit;
-	int		sideHit;
+	int		sidehit;
 	float	hitX[RES]; // tmp
 	float	hitY[RES]; // tmp
 }				raycast;
@@ -113,9 +119,10 @@ typedef struct	s_game
 	void	*mlx;
 	void	*win;
 	raycast	*player;
-	text	wall2d;
-	text	floor2d;
-	text	dot;
+	text	ea;
+	text	we;
+	text	so;
+	text	no;
 	text	pixel;
 	text	minimap;
 	t_info	info;
@@ -170,6 +177,7 @@ void	init_sidedist(raycast *player, int mapX, int mapY);
 int		draw_map_2d(t_game *game, int i, int j);
 void	my_mlx_pixel_put(text	*data, int x, int y, int color);
 void	raycasting(t_game *game, raycast *player);
+int		my_mlx_pixel_get(text t, float x, int y);
 
 char	*get_line(int fd);
 

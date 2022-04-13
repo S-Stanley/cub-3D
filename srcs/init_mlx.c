@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/12 17:47:23 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/13 17:05:10 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ static void	init_info(t_game *game)
 	game->player->hit = 0;
 }
 
+int			my_mlx_pixel_get(text t, float x, int y)
+{
+	int color;
+	int *int_addr;
+
+	int_addr = (int*)t.addr;
+	color = int_addr[y * TILERES + (int)(x * TILERES)];
+	return (color);
+}
+
 void	my_mlx_pixel_put(text *data, int x, int y, int color)
 {
 	char	*dst;
@@ -42,11 +52,11 @@ char	**init_map2(void)
 	map[0] = strdup("111111111111111111111111\0");
 	map[1] = strdup("100000000000000000000001\0");
 	map[2] = strdup("100000000000000000000001\0");
-	map[3] = strdup("100000000000000000000001\0");
-	map[4] = strdup("100000000000000000000001\0");
+	map[3] = strdup("100000000010000000000001\0");
+	map[4] = strdup("100000000010000000000001\0");
 	map[5] = strdup("100000000000000000000001\0");
-	map[6] = strdup("100000000000000000000001\0");
-	map[7] = strdup("100000000000000000000001\0");
+	map[6] = strdup("100000000010000000000001\0");
+	map[7] = strdup("100000000010000000000001\0");
 	map[8] = strdup("100001111110000000000001\0");
 	map[9] = strdup("100000000000000000000001\0");
 	map[10] = strdup("100000000000000000000001\0");
@@ -86,9 +96,10 @@ void	init_mlx(t_game game)
 	game.minimap.img = mlx_new_image(game.mlx, RES, RES);
 	game.minimap.addr = mlx_get_data_addr(game.minimap.img, &game.minimap.bits_per_pixel, &game.minimap.line_length,
 								&game.minimap.endian);
-	load_texture(&game, &game.wall2d, "assets/texture_ea.xpm");
-	load_texture(&game, &game.floor2d, "assets/texture_we.xpm");
-	load_texture(&game, &game.dot, "assets/dot.xpm");
+	load_texture(&game, &game.ea, "assets/textureea.xpm");
+	load_texture(&game, &game.we, "assets/texturewe.xpm");
+	load_texture(&game, &game.so, "assets/textureso.xpm");
+	load_texture(&game, &game.no, "assets/textureno.xpm");
 	mlx_key_hook(game.win, key_press_hook, &game);
 	draw_map_2d(&game, -1, -1);
 	mlx_hook(game.win, 17, 1L << 17, close_win_hook, &game);
