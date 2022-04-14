@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/13 17:05:10 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/14 18:45:52 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,16 @@ static void	init_info(t_game *game)
 
 int			my_mlx_pixel_get(text t, float x, int y)
 {
+	// int color;
+
+	// color = (int)*(t.addr + (int)((float)(x * t) + y) * 4);
+	// // color = int_addr[y * t.line_length + (int)(x * (t.bits_per_pixel / 8))];
+
 	int color;
 	int *int_addr;
 
 	int_addr = (int*)t.addr;
-	color = int_addr[y * TILERES + (int)(x * TILERES)];
+	color = int_addr[y  + (int)(x * t.width)];	
 	return (color);
 }
 

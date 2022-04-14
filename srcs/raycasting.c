@@ -6,31 +6,11 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:51:20 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/13 17:35:04 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/14 18:42:32 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
-
-static void	walline(t_game *game, int *pos, unsigned int color[480][480], int sidehit)
-{
-	int		y;
-	int		start;
-	int		end;
-	int		x;
-
-	(void)sidehit;
-	(void)start;
-	y = pos[0];
-	end = pos[1];
-	x = pos[2];
-	// printf("my color is %u\n", color[y][x]);
-	while (y < end)
-	{
-		my_mlx_pixel_put(&game->pixel, x, y, color[y][x]);
-		y++;
-	}
-}
 
 static void	verline(t_game *game, int pos[3], int color, int diff)
 {
@@ -46,9 +26,11 @@ static void	verline(t_game *game, int pos[3], int color, int diff)
 	x = pos[2];
 	y = -1;
 	while (++y < start)
-		my_mlx_pixel_put(&game->pixel, x, y, BLACK);
+		my_mlx_pixel_put(&game->pixel, x, y, 0xFFFF00);
 	while (y < end)
 	{
+		// if (x == 0)
+		// 	printf(" pixel numero : %d    apres le pixel put\n", x * game->pixel.line_length + y * game->pixel.bits_per_pixel / 8);
 		// if ((y >= start && y <= start + 2) || (y >= end - 2 && y <= end) || diff == 1)
 		// 	my_mlx_pixel_put(&game->pixel, x, y, GREY);
 		// else
@@ -91,6 +73,26 @@ static void	init_sidedist_fov(raycast *player, int mapX, int mapY, int i)
 	}
 }
 
+// static void	walline(t_game *game, int *pos, unsigned int color[480][480], int sidehit)
+// {
+// 	int		y;
+// 	int		start;
+// 	int		end;
+// 	int		x;
+
+// 	(void)sidehit;
+// 	(void)start;
+// 	y = pos[0];
+// 	end = pos[1];
+// 	x = pos[2];
+// 	// printf("my color is %u\n", color[y][x]);
+// 	while (y < end)
+// 	{
+// 		my_mlx_pixel_put(&game->pixel, x, y, color[y][0]);
+// 		y++;
+// 	}
+// }
+
 static void	perpwallcalc(t_game *game, raycast *player, int side, int i, float diff)
 {
 	int 			lineHeight;
@@ -98,11 +100,11 @@ static void	perpwallcalc(t_game *game, raycast *player, int side, int i, float d
 	float			wallX;
 	float			step;
 	float			texPos;
-	int				texx;
+	float			texx;
 	int 			texy;
-	int				color;
+	 int				color;
 	int				y;
-	static unsigned int	buffer[RES][RES];
+	// static unsigned int	buffer[RES][RES];
 
 	positions[2] = RES - i;
 	if (side == 0)
@@ -126,41 +128,52 @@ static void	perpwallcalc(t_game *game, raycast *player, int side, int i, float d
 		texx = TILERES - texx - 1;
 	if (side == 1 && player->rayDirY < 0)
 		texx = TILERES - texx - 1;
-	step = 1.0 * TILERES / lineHeight;
-	texPos = (positions[0] - RES / 2 + lineHeight / 2) * step;
+				// step = 1.0 * texture_choose(v, r).height / wall->line_h;
+	step = 1.0 * (float)TILERES / (float)lineHeight;
+				// tex_pos = ((float)pos[0].y - (float)v->c->resolution->y / 2
+				// 		+ wall->line_h / 2) * step;
+	texPos = ((float)positions[0] - (float)RES / 2.0 + (float)lineHeight / 2.0) * step;
 	y = positions[0];
-	if (positions[2] == RES / 2)
-		printf("texpos sans step : %d  step : %d  texPos : %f\n",(positions[0] - RES / 2 + lineHeight / 2), 1 * TILERES / lineHeight, texPos);
 	while (y < positions[1])
 	{
-		texy = (int)texPos & (TILERES - 1);
-		texPos += step;	
-		if (player->sidehit == 0)
-			color = my_mlx_pixel_get(game->no, texPos, texy);
-		if (player->sidehit == 1)
-			color = my_mlx_pixel_get(game->so, texPos, texy);
-		if (player->sidehit == 2)
-			color = my_mlx_pixel_get(game->we, texPos, texy);
-		if (player->sidehit == 3)
-			color = my_mlx_pixel_get(game->ea, texPos, texy);
-		buffer[y][i] = color;
+		// tex_y = (int)tex_pos & (texture_choose(v, r).height - 1);
+		texy = (int)texPos & 63;
+		// tex_pos += step;
+		texPos += step;
+		if (positions[2] == 0)
+			printf("y = %d height %d texx %f texy %d step : %f\n",
+					y - positions[0], lineHeight, texx, texy, step);
+		if (player->sidehit == NO)
+			color = my_mlx_pixel_get(game->no, texx, texy);
+		if (player->sidehit == SO)
+			color = my_mlx_pixel_get(game->so, texx, texy);
+		if (player->sidehit == EA)
+			color = my_mlx_pixel_get(game->we, texx, texy);
+		if (player->sidehit == WE)
+			color = my_mlx_pixel_get(game->ea, texx, texy);
+		// if (positions[2] == 0)
+		// 	printf("color is %d\n", color);
+		my_mlx_pixel_put(&game->pixel, RES - i, y, color);
+		// if (RES - i == 0)
+		// 	printf("texy =  pixel numero : %d \n", (RES - i) * game->pixel.line_length + y * game->pixel.bits_per_pixel / 8);
 		y++;
 	}
-	walline(game, positions, buffer, player->sidehit);
+	// walline(game, positions, buffer, player->sidehit);
 	verline(game, positions, RED, diff);
 }
 
 
 static void	init_cardinal(raycast *player, int side)
 {
-	if (player->rayDirY < 0 && side == 0)
-		player->cardinal = NO;
+	if (player->rayDirY < 0 && side == 1)
+		player->sidehit = NO;
+	else if (player->rayDirY >= 0 && side == 1)
+		player->sidehit = SO;
+	else if (player->rayDirX > 0 && side == 0)
+		player->sidehit = EA;
 	else
-		player->cardinal = SO;
-	if (player->rayDirX > 0 && side == 1)
-		player->cardinal = EA;
-	else
-		player->cardinal = WE;
+		player->sidehit = WE;
+	
 }
 
 void	raycasting(t_game *game, raycast *player)
@@ -201,4 +214,5 @@ void	raycasting(t_game *game, raycast *player)
 		perpwallcalc(game, player, side, i, diff);
 		player->hit = 0;
 	}
+		mlx_put_image_to_window(game->mlx, game->win, game->so.img, 440,440);
 }
