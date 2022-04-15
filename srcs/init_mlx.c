@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/14 18:45:52 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/15 17:12:38 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,14 @@ static void	init_info(t_game *game)
 {
 	game->info.height = RES;
 	game->info.width = RES;
-	game->player = malloc((sizeof (raycast)) + (2 * RES - 2) * sizeof (float));
-	game->player->posX = 320.00000000;
-	game->player->posY = 280.00000000;
-	game->player->dirX = -1;
-	game->player->dirY = 0;
-	game->player->planeX = 0;
-	game->player->planeY = 0.666666;
-	game->player->hit = 0;
-}
-
-int			my_mlx_pixel_get(text t, float x, int y)
-{
-	// int color;
-
-	// color = (int)*(t.addr + (int)((float)(x * t) + y) * 4);
-	// // color = int_addr[y * t.line_length + (int)(x * (t.bits_per_pixel / 8))];
-
-	int color;
-	int *int_addr;
-
-	int_addr = (int*)t.addr;
-	color = int_addr[y  + (int)(x * t.width)];	
-	return (color);
-}
-
-void	my_mlx_pixel_put(text *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	game->plr = malloc((sizeof (t_raycast)) + (2 * RES - 2) * sizeof (float));
+	game->plr->posx = 320.00000000;
+	game->plr->posy = 280.00000000;
+	game->plr->dirx = -1;
+	game->plr->diry = 0;
+	game->plr->planex = 0;
+	game->plr->planey = 0.666666;
+	game->plr->hit = 0;
 }
 
 char	**init_map2(void)
@@ -81,11 +58,12 @@ char	**init_map2(void)
 	return (map);
 }
 
-void			load_texture(t_game *game, text *text, char *path)
+void	load_texture(t_game *game, t_text *text, char *path)
 {
-	text->img = mlx_xpm_file_to_image(game->mlx, path, &text->width, &text->height);
+	text->img = mlx_xpm_file_to_image(game->mlx, path,
+			&text->width, &text->height);
 	text->addr = mlx_get_data_addr(text->img, &text->bits_per_pixel,
-						&text->line_length, &text->endian);
+			&text->line_length, &text->endian);
 }
 
 void	init_mlx(t_game game)
@@ -94,19 +72,22 @@ void	init_mlx(t_game game)
 	game.map = init_map2();
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx,
-		960, RES, "Cub3d");
+			960, RES, "Cub3d");
 	game.pixel.img = mlx_new_image(game.mlx, RES, RES);
-	game.pixel.addr = mlx_get_data_addr(game.pixel.img, &game.pixel.bits_per_pixel, &game.pixel.line_length,
-								&game.pixel.endian);
+	game.pixel.addr = mlx_get_data_addr(game.pixel.img,
+			&game.pixel.bits_per_pixel, &game.pixel.line_length,
+			&game.pixel.endian);
 	game.minimap.img = mlx_new_image(game.mlx, RES, RES);
-	game.minimap.addr = mlx_get_data_addr(game.minimap.img, &game.minimap.bits_per_pixel, &game.minimap.line_length,
-								&game.minimap.endian);
+	game.minimap.addr = mlx_get_data_addr(game.minimap.img,
+			&game.minimap.bits_per_pixel, &game.minimap.line_length,
+			&game.minimap.endian);
 	load_texture(&game, &game.ea, "assets/textureea.xpm");
 	load_texture(&game, &game.we, "assets/texturewe.xpm");
 	load_texture(&game, &game.so, "assets/textureso.xpm");
 	load_texture(&game, &game.no, "assets/textureno.xpm");
-	mlx_key_hook(game.win, key_press_hook, &game);
 	draw_map_2d(&game, -1, -1);
+	raycasting(&game, game.plr);
+	mlx_key_hook(game.win, key_press_hook, &game);
 	mlx_hook(game.win, 17, 1L << 17, close_win_hook, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press_hook, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release_hook, &game);

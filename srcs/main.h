@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/13 17:07:40 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/15 17:08:42 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,14 @@
 # define RED				0xFF0000
 # define GREY				0x808080
 
-
-typedef struct	s_rgb
+typedef struct s_rgb
 {
 	int		color1;
 	int		color2;
 	int		color3;
 }				t_rgb;
 
-typedef struct	s_text
+typedef struct s_text
 {
 	void	*img;
 	char	*addr;
@@ -64,77 +63,64 @@ typedef struct	s_text
 	int		height;
 }				t_text;
 
-typedef struct	text
-{
-	void	*img;
-	char	*addr;
-	int		init;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		width;
-	int		height;
-}				text;
-
-typedef struct	s_point
+typedef struct s_point
 {
 	int		x;
 	int		y;
 }				t_point;
 
-typedef struct	s_info
+typedef struct s_info
 {
 	int		height;
 	int		width;
 }				t_info;
 
-typedef struct	raycast
+typedef struct s_raycast
 {
-	float	posX;
-	float	posY;
-	float	dirX; // tmp
-	float	dirY; // tmp
-	float	planeX;
-	float	planeY;
-	float	sideDistX;
-	float	sideDistY;
-	float	deltaDistX;
-	float	deltaDistY;
-	float	perpWallDist;
-	float	rayDirX;
-	float	rayDirY;
-	float	cameraX;
-	float	cameraY;
+	float	posx;
+	float	posy;
+	float	dirx;
+	float	diry;
+	float	planex;
+	float	planey;
+	float	sdistx;
+	float	sdisty;
+	float	ddistx;
+	float	ddisty;
+	float	perp;
+	float	raydirx;
+	float	raydiry;
+	float	camerax;
 	int		cardinal;
-	int		stepX;
-	int		stepY;
+	int		stepx;
+	int		stepy;
 	int		hit;
 	int		sidehit;
-	float	hitX[RES]; // tmp
-	float	hitY[RES]; // tmp
-}				raycast;
+	float	hitx[RES];
+	float	hity[RES];
+}				t_raycast;
 
-typedef struct	s_game 
+typedef struct s_game
 {
-	void	*mlx;
-	void	*win;
-	raycast	*player;
-	text	ea;
-	text	we;
-	text	so;
-	text	no;
-	text	pixel;
-	text	minimap;
-	t_info	info;
-	char	**map;
-	int		player_dir;
-	char	*texture_no;
-	char	*texture_so;
-	char	*texture_we;
-	char	*texture_ea;
-	t_rgb	floor_color;
-	t_rgb	ceil_color;
-	char	**map2; // map temporaire plus grande 
+	void		*mlx;
+	void		*win;
+	t_raycast	*plr;
+	t_text		ea;
+	t_text		we;
+	t_text		so;
+	t_text		no;
+	t_text		pixel;
+	t_text		minimap;
+	t_info		info;
+	char		**map;
+	int			player_dir;
+	char		*texture_no;
+	char		*texture_so;
+	char		*texture_we;
+	char		*texture_ea;
+	t_rgb		floor_color;
+	t_rgb		ceil_color;
+	char		**map2;
 }				t_game;
 
 char	**init_map(void);
@@ -171,13 +157,16 @@ int		key_press_hook(int keycode, t_game *game);
 int		key_release_hook(int keycode, t_game *game);
 void	moves(t_game *game, int direction);
 int		draw_map_2d(t_game *game, int i, int j);
-void	draw_dir(t_game *game, raycast *player);
+void	draw_dir(t_game *game, t_raycast *plr);
 int		close_win_hook(int keycode, t_game *game);
-void	init_sidedist(raycast *player, int mapX, int mapY);
+void	init_sidedist(t_raycast *plr, int mapX, int mapY);
 int		draw_map_2d(t_game *game, int i, int j);
-void	my_mlx_pixel_put(text	*data, int x, int y, int color);
-void	raycasting(t_game *game, raycast *player);
-int		my_mlx_pixel_get(text t, float x, int y);
+void	my_mlx_pixel_put(t_text	*data, int x, int y, int color);
+void	raycasting(t_game *game, t_raycast *plr);
+int		my_mlx_pixel_get(t_text t, float x, int y);
+void	draw_pixel_wall(t_game *game, int pos[4], int height, float texx);
+void	verline(t_game *game, int pos[3], int color);
+int		sdist_calc(t_game *game, t_raycast *plr, int *mapx, int *mapy);
 
 char	*get_line(int fd);
 

@@ -6,48 +6,48 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:53:08 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/13 16:43:27 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/15 17:10:12 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	draw_dir(t_game *game, raycast *player)
+void	draw_dir(t_game *game, t_raycast *plr)
 {
-	float	tmpRayX;
-	float	tmpRayY;
-	int 	i;
+	float	tmprayx;
+	float	tmprayy;
+	int		i;
 	float	tmp1;
 	float	tmp2;
-	float	tmpRayX2;
-	float	tmpRayY2;
+	float	tmprayx2;
+	float	tmprayy2;
 
 	i = 0;
 	while (++i <= RES)
 	{
-		tmpRayX2 = game->player->posX;
-		tmpRayY2 = game->player->posY;
-		player->cameraX = 2 * (float)i / (float)RES - 1;
-		tmpRayX = player->dirX + player->planeX * player->cameraX;
-		tmpRayY = player->dirY + player->planeY * player->cameraX;
-		while (player->hit == 0)
+		tmprayx2 = game->plr->posx;
+		tmprayy2 = game->plr->posy;
+		plr->camerax = 2 * (float)i / (float)RES - 1;
+		tmprayx = plr->dirx + plr->planex * plr->camerax;
+		tmprayy = plr->diry + plr->planey * plr->camerax;
+		while (plr->hit == 0)
 		{
-			tmp1 = (tmpRayX2 + tmpRayX * 1) / 20;
-			tmp2 = (tmpRayY2 + tmpRayY * 1) / 20;
-			if (game->map[(int)(tmpRayY2 / 20)][(int)tmp1] == '0')
-				tmpRayX2 += tmpRayX * 1;
+			tmp1 = (tmprayx2 + tmprayx) / TILERES;
+			tmp2 = (tmprayy2 + tmprayy) / TILERES;
+			if (game->map[(int)(tmprayy2 / TILERES)][(int)tmp1] == '0')
+				tmprayx2 += tmprayx * 1;
 			else
-				player->hit = 1;
-			if (game->map[(int)tmp2][(int)(tmpRayX2 / 20)] == '0')
-				tmpRayY2 += tmpRayY * 1;
+				plr->hit = 1;
+			if (game->map[(int)tmp2][(int)(tmprayx2 / TILERES)] == '0')
+				tmprayy2 += tmprayy * 1;
 			else
-				player->hit = 1;
-			my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, 0xFF0000);
-			if (i == RES / 2 | i + 1 == RES /2)
-				my_mlx_pixel_put(&game->minimap, tmpRayX2, tmpRayY2, 0xFFFFFF);
+				plr->hit = 1;
+			my_mlx_pixel_put(&game->minimap, tmprayx2, tmprayy2, 0xFF0000);
+			if (i == RES / 2 | i + 1 == RES / 2)
+				my_mlx_pixel_put(&game->minimap, tmprayx2, tmprayy2, 0xFFFFFF);
 		}
-		player->hit = 0;
-		player->hitY[i] = tmpRayY2;
-		player->hitX[i] = tmpRayX2;
+		plr->hit = 0;
+		plr->hity[i] = tmprayy2;
+		plr->hitx[i] = tmprayx2;
 	}
 }

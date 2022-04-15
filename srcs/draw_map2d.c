@@ -6,13 +6,13 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:56:14 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/14 12:03:21 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/15 17:11:13 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-static void		draw_cube(t_point *pos, int size, int color, text *img)
+static void	draw_cube(t_point *pos, int size, int color, t_text *img)
 {
 	int		y;
 	int		x;
@@ -51,6 +51,6 @@ int	draw_map_2d(t_game *game, int i, int j)
 				draw_cube(&coord, 24, 0xFFFFFF, &game->minimap);
 		}
 	}
-	draw_dir(game, game->player);
+	draw_dir(game, game->plr);
 	return (0);
 }
