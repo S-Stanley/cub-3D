@@ -6,61 +6,52 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:23:03 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/07 18:17:58 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/15 15:09:58 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	move(t_game *game, t_point player_pos, float dir)
+void	move(t_game *game, float dir)
 {
-	(void)player_pos;
-	float	tmp1 = (game->player->posX + game->player->dirX * dir) / 20;
-	float	tmp2 = (game->player->posY + game->player->dirY * dir) / 20;
-	float	tmp3 = game->player->posX / 20;
-	float	tmp4 = game->player->posY / 20;
-	if (game->map[(int)tmp4][(int)tmp1] == '0') 
-	{
-		puts(" x ");
-		game->player->posX += game->player->dirX * dir;
-	}
-    if (game->map[(int)tmp2][(int)tmp3] == '0')
-	{
-		puts(" y ");
-		game->player->posY += game->player->dirY * dir;
-	}
-	printf("  %f %f %f %f %f %f\n", game->player->posX, game->player->posY, game->player->dirX, game->player->dirY, game->player->planeX, game->player->planeY);
-	printf("  %f %f \n", game->player->dirX, game->player->dirY);
+	float	tmp1;
+	float	tmp2;
+	float	tmp3;
+	float	tmp4;
+
+	tmp1 = (game->plr->posx + game->plr->dirx * dir) / 20;
+	tmp2 = (game->plr->posy + game->plr->diry * dir) / 20;
+	tmp3 = game->plr->posx / 20;
+	tmp4 = game->plr->posy / 20;
+	if (game->map[(int)tmp4][(int)tmp1] == '0')
+		game->plr->posx += game->plr->dirx * dir;
+	if (game->map[(int)tmp2][(int)tmp3] == '0')
+		game->plr->posy += game->plr->diry * dir;
 }
 
-void	rotate(t_game *game, raycast *player, float dir)
+void	rotate(t_raycast *plr, float dir)
 {
-	float	tmpDirX;
-	float	tmpPlaneX;
+	float	tmpdirx;
+	float	tmpplanex;
 
-	(void)game;
-	tmpDirX = player->dirX;
-	player->dirX = player->dirX * cos(dir) - player->dirY * sin(dir);
-	player->dirY = tmpDirX * sin(dir) + player->dirY * cos(dir);
-	tmpPlaneX = player->planeX;
-	player->planeX = player->planeX * cos(dir) - player->planeY * sin(dir);
-	player->planeY = tmpPlaneX * sin(dir) + player->planeY * cos(dir);
-	printf("%f %f %f %f\n", player->planeX, player->planeY, player->dirX, player->dirY);
-	// printf("%f %f \n", player->dirX, player->dirY);
+	tmpdirx = plr->dirx;
+	plr->dirx = plr->dirx * cos(dir) - plr->diry * sin(dir);
+	plr->diry = tmpdirx * sin(dir) + plr->diry * cos(dir);
+	tmpplanex = plr->planex;
+	plr->planex = plr->planex * cos(dir) - plr->planey * sin(dir);
+	plr->planey = tmpplanex * sin(dir) + plr->planey * cos(dir);
 }
 
 void	moves(t_game *game, int direction)
 {
-	t_point		player_pos;
-
-	player_pos.x = game->player->posX;
-	player_pos.y = game->player->posY;
 	if (direction == KEY_UP)
-		move(game, player_pos, 2.24800000);
+		move(game, 2.24800000);
 	else if (direction == KEY_DOWN)
-		move(game, player_pos, -2.24800000);
+		move(game, -2.24800000);
 	else if (direction == KEY_LEFT)
-		rotate(game, game->player, 0.1);
+		rotate(game->plr, -0.1);
 	else if (direction == KEY_RIGHT)
-		rotate(game, game->player, -0.1);
+		rotate(game->plr, 0.1);
+	mlx_put_image_to_window(game->mlx, game->win, game->pixel.img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 480, 0);
 }

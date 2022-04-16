@@ -6,54 +6,48 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:53:08 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/07 18:37:05 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/15 17:10:12 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	draw_dir(t_game *game, raycast *player)
+void	draw_dir(t_game *game, t_raycast *plr)
 {
-	float	tmpRayX = player->posX;
-	float	tmpRayY = player->posY;
-	int 	i;
+	float	tmprayx;
+	float	tmprayy;
+	int		i;
 	float	tmp1;
 	float	tmp2;
-	float	tmp3;
-	float	tmp4;
-	float	tmpRayX2;
-	float	tmpRayY2;
-	
-	i = -1;
-	tmpRayX = player->posX;
-	tmpRayY = player->posY;
-	while (++i < RES)
+	float	tmprayx2;
+	float	tmprayy2;
+
+	i = 0;
+	while (++i <= RES)
 	{
-		tmpRayX2 = game->player->posX;
-		tmpRayY2 = game->player->posY;
-		player->cameraX = 2 * (float)i / (float)RES - 1;
-		tmpRayX = player->dirX + player->planeX * player->cameraX;
-		tmpRayY = player->dirY + player->planeY * player->cameraX;
-		while (player->hit == 0)
+		tmprayx2 = game->plr->posx;
+		tmprayy2 = game->plr->posy;
+		plr->camerax = 2 * (float)i / (float)RES - 1;
+		tmprayx = plr->dirx + plr->planex * plr->camerax;
+		tmprayy = plr->diry + plr->planey * plr->camerax;
+		while (plr->hit == 0)
 		{
-			tmp1 = (tmpRayX2 + tmpRayX * 1) / 20;
-			tmp2 = (tmpRayY2 + tmpRayY * 1) / 20;
-			tmp3 = tmpRayX2 / 20;
-			tmp4 = tmpRayY2 / 20;
-			if (game->map[(int)tmp4][(int)tmp1] == '0')
-				tmpRayX2 += tmpRayX * 1;
+			tmp1 = (tmprayx2 + tmprayx) / TILERES;
+			tmp2 = (tmprayy2 + tmprayy) / TILERES;
+			if (game->map[(int)(tmprayy2 / TILERES)][(int)tmp1] == '0')
+				tmprayx2 += tmprayx * 1;
 			else
-				player->hit = 1;
-			if (game->map[(int)tmp2][(int)tmp3] == '0')
-				tmpRayY2 += tmpRayY * 1;
+				plr->hit = 1;
+			if (game->map[(int)tmp2][(int)(tmprayx2 / TILERES)] == '0')
+				tmprayy2 += tmprayy * 1;
 			else
-				player->hit = 1;
-			if (player->hit == 0 && i == RES / 2)
-				my_mlx_pixel_put(&game->pixel, tmpRayY2, tmpRayX2, 0x008000);
-			else if (player->hit == 0)
-				my_mlx_pixel_put(&game->pixel, tmpRayY2, tmpRayX2, 0xFF0000);
+				plr->hit = 1;
+			my_mlx_pixel_put(&game->minimap, tmprayx2, tmprayy2, 0xFF0000);
+			if (i == RES / 2 | i + 1 == RES / 2)
+				my_mlx_pixel_put(&game->minimap, tmprayx2, tmprayy2, 0xFFFFFF);
 		}
-		player->hit = 0;
+		plr->hit = 0;
+		plr->hity[i] = tmprayy2;
+		plr->hitx[i] = tmprayx2;
 	}
-	mlx_put_image_to_window(game->mlx, game->win, game->pixel.img, 0, 0);
 }
