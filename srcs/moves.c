@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:23:03 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/15 15:09:58 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/16 16:43:27 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	move(t_game *game, float dir)
 	float	tmp3;
 	float	tmp4;
 
-	tmp1 = (game->plr->posx + game->plr->dirx * dir) / 20;
-	tmp2 = (game->plr->posy + game->plr->diry * dir) / 20;
-	tmp3 = game->plr->posx / 20;
-	tmp4 = game->plr->posy / 20;
+	tmp1 = (game->plr->posx + game->plr->dirx * dir) / TILERES;
+	tmp2 = (game->plr->posy + game->plr->diry * dir) / TILERES;
+	tmp3 = game->plr->posx / TILERES;
+	tmp4 = game->plr->posy / TILERES;
 	if (game->map[(int)tmp4][(int)tmp1] == '0')
 		game->plr->posx += game->plr->dirx * dir;
 	if (game->map[(int)tmp2][(int)tmp3] == '0')
@@ -53,5 +53,5 @@ void	moves(t_game *game, int direction)
 	else if (direction == KEY_RIGHT)
 		rotate(game->plr, 0.1);
 	mlx_put_image_to_window(game->mlx, game->win, game->pixel.img, 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 480, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, game->map_res.width, 0);
 }

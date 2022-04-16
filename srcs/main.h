@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/15 17:08:42 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/16 16:46:25 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ typedef struct s_raycast
 	int		stepy;
 	int		hit;
 	int		sidehit;
-	float	hitx[RES];
-	float	hity[RES];
 }				t_raycast;
 
 typedef struct s_game
@@ -111,7 +109,7 @@ typedef struct s_game
 	t_text		no;
 	t_text		pixel;
 	t_text		minimap;
-	t_info		info;
+	t_info		map_res;
 	char		**map;
 	int			player_dir;
 	char		*texture_no;

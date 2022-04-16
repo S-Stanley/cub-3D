@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:53:08 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/15 17:10:12 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/16 16:46:22 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	draw_dir(t_game *game, t_raycast *plr)
 	float	tmprayy2;
 
 	i = 0;
-	while (++i <= RES)
+	while (++i <= game->map_res.width)
 	{
 		tmprayx2 = game->plr->posx;
 		tmprayy2 = game->plr->posy;
-		plr->camerax = 2 * (float)i / (float)RES - 1;
+		plr->camerax = 2 * (float)i / (float)game->map_res.width - 1;
 		tmprayx = plr->dirx + plr->planex * plr->camerax;
 		tmprayy = plr->diry + plr->planey * plr->camerax;
 		while (plr->hit == 0)
@@ -43,11 +43,9 @@ void	draw_dir(t_game *game, t_raycast *plr)
 			else
 				plr->hit = 1;
 			my_mlx_pixel_put(&game->minimap, tmprayx2, tmprayy2, 0xFF0000);
-			if (i == RES / 2 | i + 1 == RES / 2)
+			if (i == game->map_res.width / 2 | i + 1 == game->map_res.width / 2)
 				my_mlx_pixel_put(&game->minimap, tmprayx2, tmprayy2, 0xFFFFFF);
 		}
 		plr->hit = 0;
-		plr->hity[i] = tmprayy2;
-		plr->hitx[i] = tmprayx2;
 	}
 }
