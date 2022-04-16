@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/15 17:12:38 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/16 16:49:11 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void	init_info(t_game *game)
 {
-	game->info.height = RES;
-	game->info.width = RES;
-	game->plr = malloc((sizeof (t_raycast)) + (2 * RES - 2) * sizeof (float));
 	game->plr->posx = 320.00000000;
 	game->plr->posy = 280.00000000;
 	game->plr->dirx = -1;
@@ -64,6 +61,11 @@ void	load_texture(t_game *game, t_text *text, char *path)
 			&text->width, &text->height);
 	text->addr = mlx_get_data_addr(text->img, &text->bits_per_pixel,
 			&text->line_length, &text->endian);
+	if (text->width != text->height || text->width != 20)
+	{
+		write(2, "wrong texture\n", 15);
+		free_game(game);
+	}
 }
 
 void	init_mlx(t_game game)
@@ -72,12 +74,12 @@ void	init_mlx(t_game game)
 	game.map = init_map2();
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx,
-			960, RES, "Cub3d");
-	game.pixel.img = mlx_new_image(game.mlx, RES, RES);
+			game.map_res.width * 2, game.map_res.height, "Cub3d");
+	game.pixel.img = mlx_new_image(game.mlx, game.map_res.width, game.map_res.height);
 	game.pixel.addr = mlx_get_data_addr(game.pixel.img,
 			&game.pixel.bits_per_pixel, &game.pixel.line_length,
 			&game.pixel.endian);
-	game.minimap.img = mlx_new_image(game.mlx, RES, RES);
+	game.minimap.img = mlx_new_image(game.mlx, game.map_res.width, game.map_res.height);
 	game.minimap.addr = mlx_get_data_addr(game.minimap.img,
 			&game.minimap.bits_per_pixel, &game.minimap.line_length,
 			&game.minimap.endian);

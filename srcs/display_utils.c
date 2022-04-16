@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:03:43 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/15 17:08:33 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/16 16:44:06 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	verline(t_game *game, int pos[3], int color)
 		my_mlx_pixel_put(&game->pixel, x, y, 0xFFFF00);
 	while (y < end)
 		y++;
-	while (y < RES)
+	while (y < game->map_res.height)
 	{
 		my_mlx_pixel_put(&game->pixel, x, y, BLUE);
 		y++;
@@ -76,7 +76,8 @@ void	draw_pixel_wall(t_game *game, int pos[4], int height, float texx)
 	float	texpos;
 
 	step = 1.0 * (float)TILERES / (float)height;
-	texpos = ((float)pos[0] - (float)RES / 2.0 + (float)height / 2.0) * step;
+	texpos = ((float)pos[0] - (float)game->map_res.height / 2.0
+			+ (float)height / 2.0) * step;
 	y = pos[0];
 	while (y < pos[1])
 	{
