@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/15 17:12:38 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/16 17:03:28 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,36 @@ void	load_texture(t_game *game, t_text *text, char *path)
 {
 	text->img = mlx_xpm_file_to_image(game->mlx, path,
 			&text->width, &text->height);
+	if (text->img == NULL)
+	{
+		write(2, "texture init problem\n", 22);
+		free_game(game);
+	}
 	text->addr = mlx_get_data_addr(text->img, &text->bits_per_pixel,
 			&text->line_length, &text->endian);
+	if (text->addr == NULL)
+	{
+		write(2, "texture init problem\n", 22);
+		free_game(game);
+	}
+}
+
+void	load_image(t_game *game, t_text *text)
+{
+	text.img = mlx_new_image(game.mlx, RES, RES);
+	if (text.img == NULL)
+	{
+		write(2, "texture init problem\n", 22);
+		free_game(game);
+	}
+	text.addr = mlx_get_data_addr(game.text.img,
+			&game.text.bits_per_pixel, &game.text.line_length,
+			&game.minimap.endian);
+	if (text.addr == NULL)
+	{
+		write(2, "texture init problem\n", 22);
+		free_game(game);
+	}
 }
 
 void	init_mlx(t_game game)
@@ -71,16 +99,20 @@ void	init_mlx(t_game game)
 	init_info(&game);
 	game.map = init_map2();
 	game.mlx = mlx_init();
+	if (text.mlx == NULL)
+	{
+		write(2, "mlx init problem\n", 19);
+		free_game(game);
+	}
 	game.win = mlx_new_window(game.mlx,
 			960, RES, "Cub3d");
-	game.pixel.img = mlx_new_image(game.mlx, RES, RES);
-	game.pixel.addr = mlx_get_data_addr(game.pixel.img,
-			&game.pixel.bits_per_pixel, &game.pixel.line_length,
-			&game.pixel.endian);
-	game.minimap.img = mlx_new_image(game.mlx, RES, RES);
-	game.minimap.addr = mlx_get_data_addr(game.minimap.img,
-			&game.minimap.bits_per_pixel, &game.minimap.line_length,
-			&game.minimap.endian);
+	if (text.win == NULL)
+	{
+		write(2, "win init problem\n", 19);
+		free_game(game);
+	}
+	load_image(&game, &game.pixel);
+	load_image(&game, &game.minimap);
 	load_texture(&game, &game.ea, "assets/textureea.xpm");
 	load_texture(&game, &game.we, "assets/texturewe.xpm");
 	load_texture(&game, &game.so, "assets/textureso.xpm");
