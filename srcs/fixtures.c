@@ -3,33 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/04/05 20:49:45 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/16 19:15:48 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-char	**init_map(void)
+void	verif_player_pos(t_game *game)
 {
-	char	**map;
+	int		i;
+	int		x;
 
-	map = malloc(sizeof(char *) * 7);
-	if (!map)
-		return (NULL);
-	map[0] = strdup("1111111");
-	map[1] = strdup("1000101");
-	map[2] = strdup("1000101");
-	map[3] = strdup("1110001");
-	map[4] = strdup("1000011");
-	map[5] = strdup("1111111");
-	map[6] = NULL;
-	return (map);
+	i = 0;
+	while (game->map[i])
+	{
+		x = 0;
+		while (game->map[i][x])
+		{
+			if (game->map[i][x] == 'N'
+				|| game->map[i][x] == 'S'
+				|| game->map[i][x] == 'E'
+				|| game->map[i][x] == 'W')
+			{
+				game->player_y = i;
+				game->player_x = x;
+			}
+			x++;
+		}
+		i++;
+	}
 }
 
-void	verif_player_exist(t_game game)
+char	verif_player_exist(t_game game)
 {
 	int		i;
 	int		x;
@@ -44,7 +52,7 @@ void	verif_player_exist(t_game game)
 				|| game.map[i][x] == 'S'
 				|| game.map[i][x] == 'E'
 				|| game.map[i][x] == 'W')
-				return ;
+				return (game.map[i][x]);
 			x++;
 		}
 		i++;
@@ -99,6 +107,8 @@ t_game	init_game(char *filename)
 	verif_map_config(game);
 	verif_map_closed(game);
 	verif_player_exist(game);
+	game.player_dir = verif_player_exist(game);
+	verif_player_pos(&game);
 	return (game);
 }
 
