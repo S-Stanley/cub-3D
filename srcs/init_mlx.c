@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/19 12:19:47 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:06:02 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	init_info(t_game *game)
 	game->plr->hit = 0;
 	init_player_pos(game);
 	init_player_dir(game, game->player_dir);
-	printf("%d %d %f %f\n", game->map_res.height, game->map_res.width,
-		game->plr->posx, game->plr->posy);
 }
 
 void	load_texture(t_game *game, t_text *text, char *path)
@@ -32,48 +30,53 @@ void	load_texture(t_game *game, t_text *text, char *path)
 			&text->width, &text->height);
 	if (text->img == NULL)
 	{
-		write(2, "texture init problem\n", 22);
-		free_game(game);
+		write(2, "Texture init problem\nExit\n", 27);
+		free_game_point(game);
 	}
 	text->addr = mlx_get_data_addr(text->img, &text->bits_per_pixel,
 			&text->line_length, &text->endian);
 	if (text->addr == NULL)
 	{
-		write(2, "texture init problem\n", 22);
-		free_game(game);
+		write(2, "Texture init problem\nExit\n", 27);
+		free_game_point(game);
 	}
 }
 
 void	load_image(t_game *game, t_text *text)
 {
-	text.img = mlx_new_image(game.mlx, RES, RES);
-	if (text.img == NULL)
+	text->img = mlx_new_image(game->mlx, game->map_res.width,
+			game->map_res.height);
+	if (text->img == NULL)
 	{
-		write(2, "texture init problem\n", 22);
-		free_game(game);
+		write(2, "Load image problem\nExit\n", 25);
+		free_game_point(game);
 	}
-	text.addr = mlx_get_data_addr(game.text.img,
-			&game.text.bits_per_pixel, &game.text.line_length,
-			&game.minimap.endian);
-	if (text.addr == NULL)
+	text->addr = mlx_get_data_addr(text->img,
+			&text->bits_per_pixel, &text->line_length,
+			&text->endian);
+	if (text->addr == NULL)
 	{
-		write(2, "texture init problem\n", 22);
-		free_game(game);
+		write(2, "Load image problem\nExit\n", 25);
+		free_game_point(game);
 	}
 }
 
 void	init_mlx(t_game game)
 {
 	game.mlx = mlx_init();
-	if (text.mlx == NULL)
+	if (game.mlx == NULL)
 	{
-		write(2, "mlx init problem\n", 19);
+		write(2, "Mlx init problem\nExit\n", 23);
 		free_game(game);
 	}
-	load_texture(&game, &game.ea, "assets/textureea.xpm");
-	load_texture(&game, &game.we, "assets/texturewe.xpm");
-	load_texture(&game, &game.so, "assets/textureso.xpm");
-	load_texture(&game, &game.no, "assets/textureno.xpm");
+	game.win = mlx_new_window(game.mlx,
+			game.map_res.width * 2, game.map_res.height, "Cub3d");
+	load_image(&game, &game.pixel);
+	load_image(&game, &game.minimap);
+	load_texture(&game, &game.ea, game.texture_ea);
+	load_texture(&game, &game.we, game.texture_we);
+	load_texture(&game, &game.so, game.texture_so);
+	load_texture(&game, &game.no, game.texture_no);
 	draw_map_2d(&game, -1, -1);
 	raycasting(&game, game.plr);
 	mlx_key_hook(game.win, key_press_hook, &game);

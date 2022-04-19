@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/04/16 19:15:48 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/19 15:06:24 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,4 +123,19 @@ void	free_game(t_game game)
 	if (game.texture_ea)
 		free(game.texture_ea);
 	free_matrice(game.map);
+}
+
+void	free_game_point(t_game *game)
+{
+	if (game->texture_no)
+		free(game->texture_no);
+	if (game->texture_so)
+		free(game->texture_so);
+	if (game->texture_we)
+		free(game->texture_we);
+	if (game->texture_ea)
+		free(game->texture_ea);
+	free_matrice(game->map);
+	if (game->plr)
+		free(game->plr);
 }
