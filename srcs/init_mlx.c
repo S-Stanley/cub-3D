@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/16 17:03:28 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/19 12:19:47 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 void	init_info(t_game *game)
 {
-	game->map_res.height = RES;
-	game->map_res.width = RES;
-	game->plr = malloc((sizeof (t_raycast)) + (2 * RES - 2) * sizeof (float));
+	game->map_res.height = 0;
+	game->map_res.width = 0;
+	init_map_res(game);
+	game->plr = malloc((sizeof (t_raycast)) + (2 * game->map_res.width - 2)
+			* sizeof (float));
 	game->plr->hit = 0;
 	init_player_pos(game);
 	init_player_dir(game, game->player_dir);
+	printf("%d %d %f %f\n", game->map_res.height, game->map_res.width,
+		game->plr->posx, game->plr->posy);
 }
 
 void	load_texture(t_game *game, t_text *text, char *path)
@@ -66,15 +70,6 @@ void	init_mlx(t_game game)
 		write(2, "mlx init problem\n", 19);
 		free_game(game);
 	}
-	game.win = mlx_new_window(game.mlx,
-			960, RES, "Cub3d");
-	if (text.win == NULL)
-	{
-		write(2, "win init problem\n", 19);
-		free_game(game);
-	}
-	load_image(&game, &game.pixel);
-	load_image(&game, &game.minimap);
 	load_texture(&game, &game.ea, "assets/textureea.xpm");
 	load_texture(&game, &game.we, "assets/texturewe.xpm");
 	load_texture(&game, &game.so, "assets/textureso.xpm");

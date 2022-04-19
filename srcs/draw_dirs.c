@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_dirs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:53:08 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/16 19:16:13 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/19 13:50:49 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	draw_dir(t_game *game, t_raycast *plr)
 		tmprayy = plr->diry + plr->planey * plr->camerax;
 		while (plr->hit == 0)
 		{
-			tmp1 = (tmprayx2 + tmprayx) / TILERES;
-			tmp2 = (tmprayy2 + tmprayy) / TILERES;
-			if (game->map[(int)(tmprayy2 / TILERES)][(int)tmp1] == '0')
+			tmp1 = (tmprayx2 + tmprayx) / (TILERES);
+			tmp2 = (tmprayy2 + tmprayy) / (TILERES);
+			if (game->map[(int)(tmprayy2 / (TILERES))][(int)tmp1] == '0')
 				tmprayx2 += tmprayx * 1;
 			else
 				plr->hit = 1;
-			if (game->map[(int)tmp2][(int)(tmprayx2 / TILERES)] == '0')
+			if (game->map[(int)tmp2][(int)(tmprayx2 / (TILERES))] == '0')
 				tmprayy2 += tmprayy * 1;
 			else
 				plr->hit = 1;
