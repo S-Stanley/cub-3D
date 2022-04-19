@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:30:02 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/19 14:55:07 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:43:11 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	close_win_hook(int keycode, t_game *game)
 {
 	(void)keycode;
-	(void)game;
+	free_game_point(game);
 	exit (0);
 	return (1);
 }
@@ -32,8 +32,8 @@ int	key_press_hook(int keycode, t_game *game)
 	}
 	if (keycode == 65307)
 	{
-		puts("bye");
 		close_win_hook(1, game);
+		free_game_point(game);
 	}
 	return (0);
 }

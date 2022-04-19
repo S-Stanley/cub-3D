@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:51:20 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/19 14:29:29 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:39:43 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	raycasting(t_game *game, t_raycast *plr)
 
 	side = 0;
 	i = -1;
-	while (++i <= game->map_res.width)
+	while (++i < game->map_res.width)
 	{
 		mapx = (int)plr->posx;
 		mapy = (int)plr->posy;
@@ -122,8 +122,4 @@ void	raycasting(t_game *game, t_raycast *plr)
 		perpwallcalc(game, plr, side, i);
 		plr->hit = 0;
 	}
-	// mlx_put_image_to_window(game->mlx, game->win, game->so.img, 420, 440);
-	// mlx_put_image_to_window(game->mlx, game->win, game->no.img, 400, 440);
-	// mlx_put_image_to_window(game->mlx, game->win, game->we.img, 380, 440);
-	// mlx_put_image_to_window(game->mlx, game->win, game->ea.img, 360, 440);
 }
