@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:30:02 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/19 13:52:27 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/19 14:55:07 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ int	key_release_hook(int keycode, t_game *game)
 		moves(game, keycode);
 		raycasting(game, game->plr);
 		draw_map_2d(game, -1, -1);
-		int i = 0;
-		while (game->map[i])
-			printf("%s\n", game->map[i++]);
 	}
 	return (0);
 }

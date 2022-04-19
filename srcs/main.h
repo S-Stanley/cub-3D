@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/19 14:15:44 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/19 15:06:50 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int		my_mlx_pixel_get(t_text t, float x, int y);
 void	draw_pixel_wall(t_game *game, int pos[4], int height, float texx);
 void	verline(t_game *game, int pos[3], int color);
 int		sdist_calc(t_game *game, t_raycast *plr, int *mapx, int *mapy);
-
+void	free_game_point(t_game *game);
 char	*get_line(int fd);
 
 void	init_info(t_game *game);
