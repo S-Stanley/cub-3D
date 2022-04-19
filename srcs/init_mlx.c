@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
 /*   Updated: 2022/04/16 17:03:28 by acousini         ###   ########.fr       */
@@ -12,50 +12,14 @@
 
 #include "main.h"
 
-static void	init_info(t_game *game)
+void	init_info(t_game *game)
 {
-	game->info.height = RES;
-	game->info.width = RES;
+	game->map_res.height = RES;
+	game->map_res.width = RES;
 	game->plr = malloc((sizeof (t_raycast)) + (2 * RES - 2) * sizeof (float));
-	game->plr->posx = 320.00000000;
-	game->plr->posy = 280.00000000;
-	game->plr->dirx = -1;
-	game->plr->diry = 0;
-	game->plr->planex = 0;
-	game->plr->planey = 0.666666;
 	game->plr->hit = 0;
-}
-
-char	**init_map2(void)
-{
-	char **map;
-
-	map = malloc(sizeof(char *) * 24);
-	map[0] = strdup("111111111111111111111111\0");
-	map[1] = strdup("100000000000000000000001\0");
-	map[2] = strdup("100000000000000000000001\0");
-	map[3] = strdup("100000000010000000000001\0");
-	map[4] = strdup("100000000010000000000001\0");
-	map[5] = strdup("100000000000000000000001\0");
-	map[6] = strdup("100000000010000000000001\0");
-	map[7] = strdup("100000000010000000000001\0");
-	map[8] = strdup("100001111110000000000001\0");
-	map[9] = strdup("100000000000000000000001\0");
-	map[10] = strdup("100000000000000000000001\0");
-	map[11] = strdup("100000000000000000000001\0");
-	map[12] = strdup("100000000000000000000001\0");
-	map[13] = strdup("100000000000000000000001\0");
-	map[14] = strdup("100000000000000000000001\0");
-	map[15] = strdup("100000000000000000000001\0");
-	map[16] = strdup("100000000000000000000001\0");
-	map[17] = strdup("100000000000000000000001\0");
-	map[18] = strdup("100000000000000000000001\0");
-	map[19] = strdup("100000000000000000000001\0");
-	map[20] = strdup("100000000000000000000001\0");
-	map[21] = strdup("100000000000000000000001\0");
-	map[22] = strdup("100000000000000000000001\0");
-	map[23] = strdup("111111111111111111111111\0");
-	return (map);
+	init_player_pos(game);
+	init_player_dir(game, game->player_dir);
 }
 
 void	load_texture(t_game *game, t_text *text, char *path)
@@ -96,8 +60,6 @@ void	load_image(t_game *game, t_text *text)
 
 void	init_mlx(t_game game)
 {
-	init_info(&game);
-	game.map = init_map2();
 	game.mlx = mlx_init();
 	if (text.mlx == NULL)
 	{

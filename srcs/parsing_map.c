@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 14:41:52 by sserbin           #+#    #+#             */
-/*   Updated: 2022/04/05 20:40:14 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/16 19:24:22 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	is_line_map(char *line)
 			&& line[i] != 'N'
 			&& line[i] != 'S'
 			&& line[i] != 'E'
-			&& line[i] != 'w')
+			&& line[i] != 'W')
 			return (false);
 		i++;
 	}
@@ -73,7 +73,7 @@ bool	check_map_line(char *line, bool top_or_bottom)
 		else
 		{
 			if (i == 0 || !line[i + 1])
-				if (line[i] != '1')
+				if (line[i] != '1' && line[i] != ' ')
 					return (false);
 		}
 		i++;

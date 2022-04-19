@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/15 17:08:42 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/16 19:13:09 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define KEY_RIGHT			100
 # define KEY_DOWN			115
 # define RES				480
-# define TILERES			20
+# define TILERES			32
 # define GREEN				0x008000
 # define BLUE				0x0000FF
 # define WHITE				0xFFFFFF
@@ -96,8 +96,6 @@ typedef struct s_raycast
 	int		stepy;
 	int		hit;
 	int		sidehit;
-	float	hitx[RES];
-	float	hity[RES];
 }				t_raycast;
 
 typedef struct s_game
@@ -111,7 +109,7 @@ typedef struct s_game
 	t_text		no;
 	t_text		pixel;
 	t_text		minimap;
-	t_info		info;
+	t_info		map_res;
 	char		**map;
 	int			player_dir;
 	char		*texture_no;
@@ -121,6 +119,8 @@ typedef struct s_game
 	t_rgb		floor_color;
 	t_rgb		ceil_color;
 	char		**map2;
+	int			player_x;
+	int			player_y;
 }				t_game;
 
 char	**init_map(void);
@@ -169,5 +169,9 @@ void	verline(t_game *game, int pos[3], int color);
 int		sdist_calc(t_game *game, t_raycast *plr, int *mapx, int *mapy);
 
 char	*get_line(int fd);
+
+void	init_info(t_game *game);
+void	init_player_pos(t_game *game);
+void	init_player_dir(t_game *game, char playerDir);
 
 #endif

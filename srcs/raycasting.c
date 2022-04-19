@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:51:20 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/15 17:08:53 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/16 17:21:12 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	init_sidedist_fov(t_raycast *plr, int mapX, int mapY, int i)
 {
-	plr->camerax = 2 * (float)i / (float)RES - 1;
+	(void)i;
 	plr->raydirx = plr->dirx + plr->planex * plr->camerax;
 	plr->raydiry = plr->diry + plr->planey * plr->camerax;
 	plr->ddistx = fabsf(1 / plr->raydirx);
@@ -69,20 +69,20 @@ static void	perpwallcalc(t_game *game, t_raycast *plr, int side, int i)
 	int				pos[4];
 	float			texx;
 
-	pos[2] = RES - i;
+	pos[2] = game->map_res.height - i;
 	if (side == 0)
 		plr->perp = (plr->sdistx - plr->ddistx);
 	else
 		plr->perp = (plr->sdisty - plr->ddisty);
-	height = (int)(RES / plr->perp);
-	pos[0] = -height / 2 + RES / 2;
+	height = (int)(game->map_res.height / plr->perp);
+	pos[0] = -height / 2 + game->map_res.height / 2;
 	if (pos[0] < 0)
 		pos[0] = 0;
-	pos[1] = height / 2 + RES / 2;
-	if (pos[1] >= RES)
-		pos[1] = RES - 1;
+	pos[1] = height / 2 + game->map_res.height / 2;
+	if (pos[1] >= game->map_res.height)
+		pos[1] = game->map_res.height - 1;
 	texx = texx_init(game, pos, height);
-	pos[3] = RES - i;
+	pos[3] = game->map_res.height - i;
 	draw_pixel_wall(game, pos, height, texx);
 	verline(game, pos, RED);
 }
@@ -108,10 +108,11 @@ void	raycasting(t_game *game, t_raycast *plr)
 
 	side = 0;
 	i = -1;
-	while (++i <= RES)
+	while (++i <= game->map_res.width)
 	{
 		mapx = (int)plr->posx;
 		mapy = (int)plr->posy;
+		plr->camerax = 2 * (float)i / (float)game->map_res.width - 1;
 		init_sidedist_fov(plr, (int)plr->posx / 20, (int)plr->posy / 20, i);
 		while (plr->hit == 0)
 		{
