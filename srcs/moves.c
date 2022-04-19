@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:23:03 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/19 13:56:34 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:41:19 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	moves(t_game *game, int direction)
 	else if (direction == KEY_RIGHT)
 		rotate(game->plr, 0.1);
 	mlx_put_image_to_window(game->mlx, game->win, game->pixel.img, 0, 0);
-	mlx_put_image_to_window(
-		game->mlx, game->win, game->minimap.img, game->map_res.width, 0);
+	mlx_put_image_to_window(game->mlx, game->win,
+		game->minimap.img, (game->map_res.width / 3) * 2,
+		(game->map_res.height / 3) * 2);
 }
