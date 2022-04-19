@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/16 19:16:12 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/19 12:19:47 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 void	init_info(t_game *game)
 {
-	game->map_res.height = RES;
-	game->map_res.width = RES;
-	game->plr = malloc((sizeof (t_raycast)) + (2 * RES - 2) * sizeof (float));
+	game->map_res.height = 0;
+	game->map_res.width = 0;
+	init_map_res(game);
+	game->plr = malloc((sizeof (t_raycast)) + (2 * game->map_res.width - 2)
+			* sizeof (float));
 	game->plr->hit = 0;
 	init_player_pos(game);
 	init_player_dir(game, game->player_dir);
+	printf("%d %d %f %f\n", game->map_res.height, game->map_res.width,
+		game->plr->posx, game->plr->posy);
 }
 
 void	load_texture(t_game *game, t_text *text, char *path)
@@ -35,11 +39,13 @@ void	init_mlx(t_game game)
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx,
 			game.map_res.width * 2, game.map_res.height, "Cub3d");
-	game.pixel.img = mlx_new_image(game.mlx, game.map_res.width, game.map_res.height);
+	game.pixel.img = mlx_new_image(game.mlx, game.map_res.width,
+			game.map_res.height);
 	game.pixel.addr = mlx_get_data_addr(game.pixel.img,
 			&game.pixel.bits_per_pixel, &game.pixel.line_length,
 			&game.pixel.endian);
-	game.minimap.img = mlx_new_image(game.mlx, game.map_res.width, game.map_res.height);
+	game.minimap.img = mlx_new_image(game.mlx, game.map_res.width,
+			game.map_res.height);
 	game.minimap.addr = mlx_get_data_addr(game.minimap.img,
 			&game.minimap.bits_per_pixel, &game.minimap.line_length,
 			&game.minimap.endian);

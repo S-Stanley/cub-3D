@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 16:56:14 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/15 17:11:13 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/19 14:02:12 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	draw_map_2d(t_game *game, int i, int j)
 {
 	t_point	coord;
 
+	i = -1;
 	while (game->map[++i])
 	{
 		j = -1;
@@ -46,9 +47,9 @@ int	draw_map_2d(t_game *game, int i, int j)
 			coord.x = i * 20;
 			coord.y = j * 20;
 			if (game->map[i][j] == '1')
-				draw_cube(&coord, 24, 0x000000, &game->minimap);
+				draw_cube(&coord, TILERES, 0x000000, &game->minimap);
 			else if (game->map[i][j] == '0')
-				draw_cube(&coord, 24, 0xFFFFFF, &game->minimap);
+				draw_cube(&coord, TILERES, 0xFFFFFF, &game->minimap);
 		}
 	}
 	draw_dir(game, game->plr);

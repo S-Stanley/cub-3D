@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:51:20 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/16 17:21:12 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/19 14:29:29 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	perpwallcalc(t_game *game, t_raycast *plr, int side, int i)
 	int				pos[4];
 	float			texx;
 
-	pos[2] = game->map_res.height - i;
+	pos[2] = i;
 	if (side == 0)
 		plr->perp = (plr->sdistx - plr->ddistx);
 	else
@@ -82,7 +82,7 @@ static void	perpwallcalc(t_game *game, t_raycast *plr, int side, int i)
 	if (pos[1] >= game->map_res.height)
 		pos[1] = game->map_res.height - 1;
 	texx = texx_init(game, pos, height);
-	pos[3] = game->map_res.height - i;
+	pos[3] = i;
 	draw_pixel_wall(game, pos, height, texx);
 	verline(game, pos, RED);
 }
@@ -122,8 +122,8 @@ void	raycasting(t_game *game, t_raycast *plr)
 		perpwallcalc(game, plr, side, i);
 		plr->hit = 0;
 	}
-	mlx_put_image_to_window(game->mlx, game->win, game->so.img, 420, 440);
-	mlx_put_image_to_window(game->mlx, game->win, game->no.img, 400, 440);
-	mlx_put_image_to_window(game->mlx, game->win, game->we.img, 380, 440);
-	mlx_put_image_to_window(game->mlx, game->win, game->ea.img, 360, 440);
+	// mlx_put_image_to_window(game->mlx, game->win, game->so.img, 420, 440);
+	// mlx_put_image_to_window(game->mlx, game->win, game->no.img, 400, 440);
+	// mlx_put_image_to_window(game->mlx, game->win, game->we.img, 380, 440);
+	// mlx_put_image_to_window(game->mlx, game->win, game->ea.img, 360, 440);
 }
