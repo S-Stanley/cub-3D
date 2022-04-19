@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:51:20 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/16 16:40:35 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/16 17:21:12 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	init_sidedist_fov(t_raycast *plr, int mapX, int mapY, int i)
 {
+	(void)i;
 	plr->raydirx = plr->dirx + plr->planex * plr->camerax;
 	plr->raydiry = plr->diry + plr->planey * plr->camerax;
 	plr->ddistx = fabsf(1 / plr->raydirx);
