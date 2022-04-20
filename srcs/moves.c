@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:23:03 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/19 16:41:19 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:06:48 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,21 @@ void	rotate(t_raycast *plr, float dir)
 	plr->planey = tmpplanex * sin(dir) + plr->planey * cos(dir);
 }
 
-void	moves(t_game *game, int direction)
+int	moves(t_game *game)
 {
-	if (direction == KEY_UP)
+	if (game->hooks.north == 1 && game->hooks.south == 0)
 		move(game, 2.24800000);
-	else if (direction == KEY_DOWN)
+	if (game->hooks.south == 1 && game->hooks.north == 1)
 		move(game, -2.24800000);
-	else if (direction == KEY_LEFT)
+	if (game->hooks.rotate_west == 1 && game->hooks.rotate_east == 0)
 		rotate(game->plr, -0.1);
-	else if (direction == KEY_RIGHT)
+	if (game->hooks.rotate_east == 1 && game->hooks.rotate_west == 0)
 		rotate(game->plr, 0.1);
+	raycasting(game, game->plr);
+	draw_map_2d(game, -1, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->pixel.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win,
 		game->minimap.img, (game->map_res.width / 3) * 2,
 		(game->map_res.height / 3) * 2);
+	return (1);
 }

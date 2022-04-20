@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/19 16:44:21 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:03:45 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,13 @@ void	init_mlx(t_game game)
 	draw_map_2d(&game, -1, -1);
 	raycasting(&game, game.plr);
 	mlx_put_image_to_window(game.mlx, game.win, game.pixel.img, 0, 0);
-	mlx_put_image_to_window(game.mlx, game.win,
-		game.minimap.img, (game.map_res.width / 3) * 2,
-		(game.map_res.height / 3) * 2);
-	mlx_key_hook(game.win, key_press_hook, &game);
+	mlx_put_image_to_window(game.mlx, game.win, game.minimap.img,
+		(game.map_res.width / 3) * 2, (game.map_res.height / 3) * 2);
+	// mlx_hook(game.win, key_press_hook, &game);
+	init_hooks(&game);
 	mlx_hook(game.win, 17, 1L << 17, close_win_hook, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press_hook, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release_hook, &game);
+	mlx_loop_hook(game.mlx, moves, &game);
 	mlx_loop(game.mlx);
-	mlx_loop_hook(game.mlx, draw_map_2d, &game);
 }

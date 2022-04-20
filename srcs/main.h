@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/19 15:06:50 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:00:07 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,22 @@ typedef struct s_text
 
 typedef struct s_point
 {
-	int		x;
 	int		y;
+	int		x;
 }				t_point;
+
+typedef struct s_hooks
+{
+	int		north;
+	int		south;
+	int		rotate_east;
+	int		rotate_west;
+}				t_hooks;
 
 typedef struct s_info
 {
-	int		height;
 	int		width;
+	int		height;
 }				t_info;
 
 typedef struct s_raycast
@@ -118,6 +126,7 @@ typedef struct s_game
 	char		*texture_ea;
 	t_rgb		floor_color;
 	t_rgb		ceil_color;
+	t_hooks		hooks;
 	char		**map2;
 	int			player_x;
 	int			player_y;
@@ -155,7 +164,7 @@ t_game	get_texture(t_game game, char *filename);
 void	init_mlx(t_game game);
 int		key_press_hook(int keycode, t_game *game);
 int		key_release_hook(int keycode, t_game *game);
-void	moves(t_game *game, int direction);
+int		moves(t_game *game);
 int		draw_map_2d(t_game *game, int i, int j);
 void	draw_dir(t_game *game, t_raycast *plr);
 int		close_win_hook(int keycode, t_game *game);
@@ -174,5 +183,6 @@ void	init_info(t_game *game);
 void	init_player_pos(t_game *game);
 void	init_player_dir(t_game *game, char playerDir);
 void	init_map_res(t_game *game);
+void	init_hooks(t_game *game);
 
 #endif
