@@ -6,11 +6,19 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 19:11:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/04/19 12:20:38 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:41:51 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+void	init_hooks(t_game *game)
+{
+	game->hooks.north = 0;
+	game->hooks.south = 0;
+	game->hooks.rotate_east = 0;
+	game->hooks.rotate_west = 0;
+}
 
 void	init_map_res(t_game *game)
 {
@@ -27,8 +35,8 @@ void	init_map_res(t_game *game)
 		if (x >= game->map_res.width)
 			game->map_res.width = x;
 	}
-	game->map_res.width *= 20;
-	game->map_res.height = 20 * y;
+	game->map_res.width *= 40;
+	game->map_res.height = 40 * y;
 }
 
 void	init_player_dir(t_game *game, char playerDir)

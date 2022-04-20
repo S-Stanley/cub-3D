@@ -22,29 +22,31 @@ int	close_win_hook(int keycode, t_game *game)
 
 int	key_press_hook(int keycode, t_game *game)
 {
-	if (keycode != KEY_DOWN || keycode != KEY_RIGHT
-		|| keycode != KEY_LEFT || keycode != KEY_UP)
-	{
-		moves(game, keycode);
-		raycasting(game, game->plr);
-		draw_map_2d(game, -1, -1);
-	}
+	if (keycode == KEY_UP)
+		game->hooks.north = 1;
+	if (keycode == KEY_LEFT)
+		game->hooks.rotate_west = 1;
+	if (keycode == KEY_RIGHT)
+		game->hooks.rotate_east = 1;
+	if (keycode == KEY_DOWN)
+		game->hooks.south = 1;
 	if (keycode == 65307)
 	{
 		close_win_hook(1, game);
 		free_game_point(game);
 	}
-	return (0);
+	return (keycode);
 }
 
 int	key_release_hook(int keycode, t_game *game)
 {
-	if (keycode != KEY_DOWN || keycode != KEY_RIGHT
-		|| keycode != KEY_LEFT || keycode != KEY_UP)
-	{
-		moves(game, keycode);
-		raycasting(game, game->plr);
-		draw_map_2d(game, -1, -1);
-	}
-	return (0);
+	if (keycode == KEY_UP)
+		game->hooks.north = 0;
+	if (keycode == KEY_LEFT)
+		game->hooks.rotate_west = 0;
+	if (keycode == KEY_RIGHT)
+		game->hooks.rotate_east = 0;
+	if (keycode == KEY_DOWN)
+		game->hooks.south = 0;
+	return (1);
 }
