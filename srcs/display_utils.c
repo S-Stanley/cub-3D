@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:03:43 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/19 14:06:50 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:02:11 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,24 @@ int	sdist_calc(t_game *game, t_raycast *plr, int *mapx, int *mapy)
 	return (side);
 }
 
-void	verline(t_game *game, int pos[3], int color)
+void	verline(t_game *game, int pos[3])
 {
 	int		y;
 	int		start;
 	int		end;
 	int		x;
 
-	(void)color;
 	start = pos[0];
 	end = pos[1];
 	x = pos[2];
 	y = -1;
 	while (++y < start)
-		my_mlx_pixel_put(&game->pixel, x, y, 0xFFFF00);
+		my_mlx_pixel_put(&game->pixel, x, y, game->ceil_color.final_color);
 	while (y < end)
 		y++;
 	while (y < game->map_res.height)
 	{
-		my_mlx_pixel_put(&game->pixel, x, y, BLUE);
+		my_mlx_pixel_put(&game->pixel, x, y, game->floor_color.final_color);
 		y++;
 	}
 }

@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_floor_and_ceil.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 23:17:17 by stan              #+#    #+#             */
-/*   Updated: 2022/04/10 09:25:39 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/20 16:30:07 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+static int	get_final_color(t_rgb text)
+{
+	text.color1 = text.color1 % 255;
+	text.color2 = text.color2 % 255;
+	text.color3 = text.color3 % 255;
+	text.final_color = ((text.color1 / 16) * 16 * 16 * 16 * 16 * 16)
+		+ ((text.color1 % 16) * 16 * 16 * 16 * 16)
+		+ ((text.color2 / 16) * 16 * 16 * 16)
+		+ ((text.color2 % 16) * 16 * 16)
+		+ ((text.color3 / 16) * 16)
+		+ ((text.color3 % 16));
+	return (text.final_color);
+}
 
 t_rgb	get_rgb_from_string(char *line, char type)
 {
@@ -33,6 +47,7 @@ t_rgb	get_rgb_from_string(char *line, char type)
 	rgb.color1 = ft_atoi(colors[0]);
 	rgb.color2 = ft_atoi(colors[1]);
 	rgb.color3 = ft_atoi(colors[2]);
+	rgb.final_color = get_final_color(rgb);
 	free_matrice(colors);
 	free(line);
 	return (rgb);

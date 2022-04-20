@@ -6,13 +6,12 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:30:02 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/19 16:43:11 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:18:24 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-	// clean_struct_game(game, "success");
 int	close_win_hook(int keycode, t_game *game)
 {
 	(void)keycode;
