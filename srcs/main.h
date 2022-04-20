@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/20 15:00:07 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:01:43 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_rgb
 	int		color1;
 	int		color2;
 	int		color3;
+	int		final_color;
 }				t_rgb;
 
 typedef struct s_text
@@ -174,7 +175,7 @@ void	my_mlx_pixel_put(t_text	*data, int x, int y, int color);
 void	raycasting(t_game *game, t_raycast *plr);
 int		my_mlx_pixel_get(t_text t, float x, int y);
 void	draw_pixel_wall(t_game *game, int pos[4], int height, float texx);
-void	verline(t_game *game, int pos[3], int color);
+void	verline(t_game *game, int pos[3]);
 int		sdist_calc(t_game *game, t_raycast *plr, int *mapx, int *mapy);
 void	free_game_point(t_game *game);
 char	*get_line(int fd);

@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:51:20 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/19 16:39:43 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/20 16:01:14 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	perpwallcalc(t_game *game, t_raycast *plr, int side, int i)
 	texx = texx_init(game, pos, height);
 	pos[3] = i;
 	draw_pixel_wall(game, pos, height, texx);
-	verline(game, pos, RED);
+	verline(game, pos);
 }
 
 static void	init_cardinal(t_raycast *plr, int side)
