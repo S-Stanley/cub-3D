@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 14:41:52 by sserbin           #+#    #+#             */
-/*   Updated: 2022/04/16 19:24:22 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/21 01:12:12 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,23 @@ char	**parse_map(char *filename)
 	int		fd;
 	char	*line;
 	char	**map;
+	int		len_map;
 
+	len_map = 0;
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (NULL);
 	map = NULL;
 	while (true)
 	{
-		line = get_line(fd);
+		line = get_line_for_map(fd, len_map, map);
 		if (!line)
 			break ;
 		else if (is_line_map(line))
 			map = push_arr(map, line);
 		else
 			free(line);
+		len_map = count_len_matrice(map);
 	}
 	close(fd);
 	return (map);
