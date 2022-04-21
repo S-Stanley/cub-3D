@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/20 16:01:43 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/21 01:13:41 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,5 +185,7 @@ void	init_player_pos(t_game *game);
 void	init_player_dir(t_game *game, char playerDir);
 void	init_map_res(t_game *game);
 void	init_hooks(t_game *game);
+char	*get_line_for_map(int fd, int len_map, char **map);
+char	*ft_concat(char *s1, char *s2);
 
 #endif

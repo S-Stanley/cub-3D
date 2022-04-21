@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 20:33:44 by stan              #+#    #+#             */
-/*   Updated: 2022/04/02 17:28:42 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/04/21 01:13:27 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,34 @@ char	*ft_trim(char *str, char to_trim)
 	}
 	to_return[x] = 0;
 	free(str);
+	return (to_return);
+}
+
+char	*ft_concat(char *s1, char *s2)
+{
+	int		i;
+	int		x;
+	char	*to_return;
+
+	if (!s2)
+		return (NULL);
+	i = 0;
+	x = -1;
+	to_return = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!to_return)
+		return (NULL);
+	if (s1)
+	{
+		while (s1[i])
+		{
+			to_return[i] = s1[i];
+			i++;
+		}
+		free(s1);
+	}
+	while (s2[++x])
+		to_return[i++] = s2[x];
+	to_return[i] = 0;
+	free(s2);
 	return (to_return);
 }
