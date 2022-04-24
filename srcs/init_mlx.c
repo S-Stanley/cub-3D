@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/20 15:03:45 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/24 13:05:46 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	init_mlx(t_game game)
 	mlx_put_image_to_window(game.mlx, game.win, game.pixel.img, 0, 0);
 	mlx_put_image_to_window(game.mlx, game.win, game.minimap.img,
 		(game.map_res.width / 3) * 2, (game.map_res.height / 3) * 2);
-	// mlx_hook(game.win, key_press_hook, &game);
 	init_hooks(&game);
 	mlx_hook(game.win, 17, 1L << 17, close_win_hook, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press_hook, &game);
