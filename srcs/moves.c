@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:23:03 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/20 15:26:44 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/24 17:00:09 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	moves(t_game *game)
 {
 	if (game->hooks.north == 1 && game->hooks.south == 0)
 		move(game, 2.24800000);
-	if (game->hooks.south == 1 && game->hooks.north == 1)
+	if (game->hooks.south == 1 && game->hooks.north == 0)
 		move(game, -2.24800000);
 	if (game->hooks.rotate_west == 1 && game->hooks.rotate_east == 0)
 		rotate(game->plr, -0.1);
@@ -56,7 +56,7 @@ int	moves(t_game *game)
 	draw_map_2d(game, -1, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->pixel.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win,
-		game->minimap.img, (game->map_res.width / 3) * 2,
-		(game->map_res.height / 3) * 2);
+		game->minimap.img, (game->map_res.width / 6) * 5,
+		(game->map_res.height / 6) * 5);
 	return (1);
 }
