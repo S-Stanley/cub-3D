@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/04/21 01:14:26 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/29 19:25:34 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,31 @@ void	verif_map_config(t_game game)
 	}
 }
 
+void	check_rgb(t_game game)
+{
+	int		err;
+
+	err = 0;
+	if (game.ceil_color.color1 > 255 || game.ceil_color.color1 < 0)
+		err = 1;
+	if (game.ceil_color.color2 > 255 || game.ceil_color.color2 < 0)
+		err = 1;
+	if (game.ceil_color.color3 > 255 || game.ceil_color.color3 < 0)
+		err = 1;
+	if (game.floor_color.color1 > 255 || game.floor_color.color1 < 0)
+		err = 1;
+	if (game.floor_color.color2 > 255 || game.floor_color.color2 < 0)
+		err = 1;
+	if (game.floor_color.color3 > 255 || game.floor_color.color3 < 0)
+		err = 1;
+	if (err)
+	{
+		free_game(game);
+		printf("Error\nRGB color should be between 0 and 255\n");
+		exit(1);
+	}
+}
+
 t_game	init_game(char *filename)
 {
 	t_game		game;
@@ -109,5 +134,6 @@ t_game	init_game(char *filename)
 	verif_player_exist(game);
 	game.player_dir = verif_player_exist(game);
 	verif_player_pos(&game);
+	check_rgb(game);
 	return (game);
 }
