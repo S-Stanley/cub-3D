@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_floor_and_ceil.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 23:17:17 by stan              #+#    #+#             */
-/*   Updated: 2022/04/20 16:30:07 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/29 19:33:59 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_rgb	get_rgb_from_string(char *line, char type)
 	char	**colors;
 	int		i;
 
-	if (count_occurence(line, ',' > 2))
+	if (count_occurence(line, ',') > 2)
 		handle_err("Error\nConfig file corrupt\n", line);
 	i = 0;
 	line = ft_trim(line, type);
