@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 23:17:17 by stan              #+#    #+#             */
-/*   Updated: 2022/04/29 19:33:59 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/29 22:26:09 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,31 @@ t_rgb	get_rgb_from_string(char *line, char type)
 	free_matrice(colors);
 	free(line);
 	return (rgb);
+}
+
+void	check_rgb(t_game game)
+{
+	int		err;
+
+	err = 0;
+	if (game.ceil_color.color1 > 255 || game.ceil_color.color1 < 0)
+		err = 1;
+	if (game.ceil_color.color2 > 255 || game.ceil_color.color2 < 0)
+		err = 1;
+	if (game.ceil_color.color3 > 255 || game.ceil_color.color3 < 0)
+		err = 1;
+	if (game.floor_color.color1 > 255 || game.floor_color.color1 < 0)
+		err = 1;
+	if (game.floor_color.color2 > 255 || game.floor_color.color2 < 0)
+		err = 1;
+	if (game.floor_color.color3 > 255 || game.floor_color.color3 < 0)
+		err = 1;
+	if (err)
+	{
+		free_game(game);
+		printf("Error\nRGB color should be between 0 and 255\n");
+		exit(1);
+	}
 }
 
 t_game	get_floor_and_ceil(t_game game, char *filename)
