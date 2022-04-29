@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 16:58:09 by sserbin           #+#    #+#             */
-/*   Updated: 2022/04/21 01:13:18 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/29 19:48:55 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ bool	check_err_map(int len_map, char *buffer, char **map)
 	if (len_map > 0)
 	{
 		printf("Error\nMap cannot have empty line\n");
+		free(buffer);
 		free_matrice(map);
 		exit(1);
 	}
