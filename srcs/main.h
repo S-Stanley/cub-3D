@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/29 22:27:23 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/30 15:55:53 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,5 +195,7 @@ void	check_line_closed_right(t_game game, int i, int x);
 void	check_line_closed_left(t_game game, int i, int x);
 void	verif_player_pos(t_game *game);
 char	verif_player_exist(t_game game);
+
+int		close_win_hook_cross(t_game *game);
 
 #endif

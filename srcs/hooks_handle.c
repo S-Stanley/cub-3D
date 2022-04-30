@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:30:02 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/20 15:18:24 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/30 15:56:19 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 int	close_win_hook(int keycode, t_game *game)
 {
 	(void)keycode;
+	free_game_point(game);
+	exit (0);
+	return (1);
+}
+
+int	close_win_hook_cross(t_game *game)
+{
 	free_game_point(game);
 	exit (0);
 	return (1);
