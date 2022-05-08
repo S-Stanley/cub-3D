@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_border.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 15:15:45 by sserbin           #+#    #+#             */
-/*   Updated: 2022/05/08 15:17:59 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/08 15:34:33 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	check_err_open_map(t_game game)
 					&& game.map[i][x + 1] == '1' && !game.map[i][x + 2]
 				)
 				{
-					printf("Map is not cloed at position %d %d\n", i, x);
+					printf("Map is not closed at position %d %d\n", i, x);
 					free_game(game);
 					exit(1);
 				}
