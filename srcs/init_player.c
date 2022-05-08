@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 19:11:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/05/08 14:57:15 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/08 19:57:03 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	init_hooks(t_game *game)
 	game->hooks.north = 0;
 	game->hooks.south = 0;
 	game->hooks.rotate_east = 0;
+	game->hooks.east = 0;
+	game->hooks.west = 0;
 	game->hooks.rotate_west = 0;
 }
 
