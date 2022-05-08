@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/05/08 15:16:06 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/08 18:56:04 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define KEY_LEFT			97
 # define KEY_RIGHT			100
 # define KEY_DOWN			115
+# define ARROW_LEFT			65361
+# define ARROW_RIGHT		65363
 # define RES				480
 # define TILERES			20
 # define GREEN				0x008000
@@ -74,6 +76,8 @@ typedef struct s_hooks
 {
 	int		north;
 	int		south;
+	int		east;
+	int		west;
 	int		rotate_east;
 	int		rotate_west;
 }				t_hooks;
