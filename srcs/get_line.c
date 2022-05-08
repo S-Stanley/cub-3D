@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 16:58:09 by sserbin           #+#    #+#             */
-/*   Updated: 2022/04/21 01:13:18 by stan             ###   ########.fr       */
+/*   Updated: 2022/04/29 20:11:49 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,27 @@ char	*get_malloc_buffer(int size, char *line)
 	return (buffer);
 }
 
-bool	check_err_map(int len_map, char *buffer, char **map)
+bool	check_err_map(int len_map, char *buffer, char **map, int fd)
 {
+	char	buff[2];
+	int		nb;
+
 	if (len_map > 0)
 	{
+		while (true)
+		{
+			nb = read(fd, buff, 1);
+			buff[1] = 0;
+			if (nb == 0)
+			{
+				free(buffer);
+				return (true);
+			}
+			if (buff[0] != ' ' && buff[0] != '\n')
+				break ;
+		}
 		printf("Error\nMap cannot have empty line\n");
+		free(buffer);
 		free_matrice(map);
 		exit(1);
 	}
@@ -59,7 +75,7 @@ char	*get_line_for_map(int fd, int len_map, char **map)
 		if (has_read == 0 || (buffer[0] == '\n' && line))
 			break ;
 		if (buffer[0] == '\n' && !line)
-			if (check_err_map(len_map, buffer, map))
+			if (check_err_map(len_map, buffer, map, fd))
 				continue ;
 		line = ft_concat(line, buffer);
 		if (!line)

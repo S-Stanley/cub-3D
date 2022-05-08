@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/29 16:25:23 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/30 15:56:14 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	init_mlx(t_game game)
 	load_texture(&game, &game.so, game.texture_so);
 	load_texture(&game, &game.no, game.texture_no);
 	init_hooks(&game);
-	mlx_hook(game.win, 17, 1L << 17, close_win_hook, &game);
+	mlx_hook(game.win, 17, 1L << 17, close_win_hook_cross, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press_hook, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release_hook, &game);
 	mlx_loop_hook(game.mlx, moves, &game);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/29 16:25:16 by acousini         ###   ########.fr       */
+/*   Updated: 2022/04/30 15:55:53 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,5 +187,15 @@ void	init_map_res(t_game *game);
 void	init_hooks(t_game *game);
 char	*get_line_for_map(int fd, int len_map, char **map);
 char	*ft_concat(char *s1, char *s2);
+
+void	check_rgb(t_game game);
+void	check_line_closed_top(t_game game, int i, int x);
+void	check_line_closed_bottom(t_game game, int i, int x);
+void	check_line_closed_right(t_game game, int i, int x);
+void	check_line_closed_left(t_game game, int i, int x);
+void	verif_player_pos(t_game *game);
+char	verif_player_exist(t_game game);
+
+int		close_win_hook_cross(t_game *game);
 
 #endif
