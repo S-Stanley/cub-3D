@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/04/30 15:55:53 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/08 15:16:06 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,5 +197,6 @@ void	verif_player_pos(t_game *game);
 char	verif_player_exist(t_game game);
 
 int		close_win_hook_cross(t_game *game);
+void	check_err_open_map(t_game game);
 
 #endif
