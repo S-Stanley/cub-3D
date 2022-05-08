@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 19:11:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/04/20 14:41:51 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/08 14:57:15 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_player_dir(t_game *game, char playerDir)
 		game->plr->diry = -1;
 		if (playerDir == 'S')
 		{
-			game->plr->dirx = 0;
+			game->plr->planex = -0.666666;
 			game->plr->diry = 1;
 		}
 	}
@@ -61,8 +61,8 @@ void	init_player_dir(t_game *game, char playerDir)
 		game->plr->diry = 0;
 		if (playerDir == 'W')
 		{
+			game->plr->planey = -0.666666;
 			game->plr->dirx = -1;
-			game->plr->diry = 0;
 		}
 	}
 }
