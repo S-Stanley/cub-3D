@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_floor_and_ceil.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 23:17:17 by stan              #+#    #+#             */
-/*   Updated: 2022/05/09 00:30:55 by stan             ###   ########.fr       */
+/*   Updated: 2022/05/09 12:33:48 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ static int	get_final_color(t_rgb text)
 	return (text.final_color);
 }
 
-void	rgb_err_handler(t_game game, char **colors)
+void	rgb_err_handler(t_game game, char **colors, char *line)
 {
 	(void)game;
+	free(line);
 	free_matrice(colors);
 	printf("Error\nConfig file corrupt: RGB err\n");
 	exit(1);
@@ -53,7 +54,7 @@ t_rgb	get_rgb_from_string(char *line, char type, t_game game)
 	}
 	colors = ft_split(line, ',');
 	if (count_len_matrice(colors) != 3)
-		rgb_err_handler(game, colors);
+		rgb_err_handler(game, colors, line);
 	rgb.color1 = ft_atoi(colors[0]);
 	rgb.color2 = ft_atoi(colors[1]);
 	rgb.color3 = ft_atoi(colors[2]);
