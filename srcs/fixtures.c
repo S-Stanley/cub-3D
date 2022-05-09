@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/05/08 15:06:01 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/09 21:54:40 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	verif_map_space(t_game game)
 				check_line_closed_top(game, i, x);
 			if (!game.map[i + 1])
 				check_line_closed_bottom(game, i, x);
-			check_line_closed_right(game, i, x);
+			if (x + 1 != (int)ft_strlen(game.map[i]))
+				check_line_closed_right(game, i, x);
 			if (x == 0 && start)
 				check_line_closed_left(game, i, x);
 			x++;
