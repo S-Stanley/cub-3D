@@ -6,7 +6,7 @@
 /*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/05/09 21:54:40 by stan             ###   ########.fr       */
+/*   Updated: 2022/05/10 01:26:44 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,32 +70,32 @@ void	check_multiple_player(t_game game)
 	}
 }
 
-void	verif_map_space(t_game game)
+void	verif_map_space(t_game game, int top)
 {
 	int		i;
 	int		x;
 	int		start;
 
-	i = 0;
-	start = 0;
-	while (game.map[i])
+	i = -1;
+	while (game.map[++i])
 	{
-		x = 0;
-		if (game.map[i][x] == '1')
-			start++;
-		while (game.map[i][x])
+		x = -1;
+		if (game.map[i][x + 1] == '1')
+			top++;
+		start = 0;
+		while (game.map[i][++x])
 		{
-			if (i == 0 && start)
+			if (game.map[i][x] == '1')
+				start++;
+			if (i == 0 && top)
 				check_line_closed_top(game, i, x);
-			if (!game.map[i + 1])
+			if (i == count_len_matrice(game.map) - 1)
 				check_line_closed_bottom(game, i, x);
 			if (x + 1 != (int)ft_strlen(game.map[i]))
 				check_line_closed_right(game, i, x);
-			if (x == 0 && start)
+			if (x == 0 && start > 0)
 				check_line_closed_left(game, i, x);
-			x++;
 		}
-		i++;
 	}
 }
 
@@ -141,7 +141,7 @@ t_game	init_game(char *filename)
 	game = get_texture(game, filename);
 	verif_map_config(game);
 	verif_map_closed(game);
-	verif_map_space(game);
+	verif_map_space(game, 0);
 	verif_column(game);
 	verif_player_exist(game);
 	game.player_dir = verif_player_exist(game);
@@ -149,5 +149,6 @@ t_game	init_game(char *filename)
 	check_rgb(game);
 	check_multiple_player(game);
 	check_err_open_map(game);
+	check_line_from_bottom(game, count_len_matrice(game.map) - 1);
 	return (game);
 }
