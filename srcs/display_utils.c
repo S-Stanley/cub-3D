@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:03:43 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/20 16:02:11 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/10 23:51:44 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	draw_pixel_wall(t_game *game, int pos[4], int height, float texx)
 	texpos = ((float)pos[0] - (float)game->map_res.height / 2.0
 			+ (float)height / 2.0) * step;
 	y = pos[0];
-	while (y < pos[1])
+	while (y <= pos[1])
 	{
 		texy = (int)texpos & 63;
 		texpos += step;
