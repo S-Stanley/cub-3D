@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_floor_and_ceil.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 23:17:17 by stan              #+#    #+#             */
-/*   Updated: 2022/04/29 22:26:09 by stan             ###   ########.fr       */
+/*   Updated: 2022/05/09 12:33:48 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,22 @@ static int	get_final_color(t_rgb text)
 	return (text.final_color);
 }
 
-t_rgb	get_rgb_from_string(char *line, char type)
+void	rgb_err_handler(t_game game, char **colors, char *line)
+{
+	(void)game;
+	free(line);
+	free_matrice(colors);
+	printf("Error\nConfig file corrupt: RGB err\n");
+	exit(1);
+}
+
+t_rgb	get_rgb_from_string(char *line, char type, t_game game)
 {
 	t_rgb	rgb;
 	char	**colors;
 	int		i;
 
-	if (count_occurence(line, ',') > 2)
+	if (count_occurence(line, ',') != 2)
 		handle_err("Error\nConfig file corrupt\n", line);
 	i = 0;
 	line = ft_trim(line, type);
@@ -44,6 +53,8 @@ t_rgb	get_rgb_from_string(char *line, char type)
 		i++;
 	}
 	colors = ft_split(line, ',');
+	if (count_len_matrice(colors) != 3)
+		rgb_err_handler(game, colors, line);
 	rgb.color1 = ft_atoi(colors[0]);
 	rgb.color2 = ft_atoi(colors[1]);
 	rgb.color3 = ft_atoi(colors[2]);
@@ -92,9 +103,9 @@ t_game	get_floor_and_ceil(t_game game, char *filename)
 		if (!line)
 			break ;
 		if (find_index(line, "F ") >= 0)
-			game.floor_color = get_rgb_from_string(line, 'F');
+			game.floor_color = get_rgb_from_string(line, 'F', game);
 		else if (find_index(line, "C ") >= 0)
-			game.ceil_color = get_rgb_from_string(line, 'C');
+			game.ceil_color = get_rgb_from_string(line, 'C', game);
 		else
 			free(line);
 	}

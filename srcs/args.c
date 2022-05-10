@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 20:35:41 by stan              #+#    #+#             */
-/*   Updated: 2022/04/03 16:42:04 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/09 00:29:45 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	check_file_access(char *filename)
 	if (fd == -1)
 	{
 		close(fd);
-		printf("Error\nFile is not accessible or do not exist");
+		printf("Error\nFile is not accessible or do not exist\n");
 		exit(1);
 	}
 	close(fd);
