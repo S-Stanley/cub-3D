@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/05/08 18:56:04 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:10:28 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ void	verline(t_game *game, int pos[3]);
 int		sdist_calc(t_game *game, t_raycast *plr, int *mapx, int *mapy);
 void	free_game_point(t_game *game);
 char	*get_line(int fd);
+void	replace_zeros(t_game *game, char **map);
 
 void	init_info(t_game *game);
 void	init_player_pos(t_game *game);

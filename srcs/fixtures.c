@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/05/08 15:06:01 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/09 15:09:51 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ t_game	init_game(char *filename)
 		exit(1);
 	}
 	game = get_texture(game, filename);
+	replace_zeros(game, game.map);
 	verif_map_config(game);
 	verif_map_closed(game);
 	verif_map_space(game);
