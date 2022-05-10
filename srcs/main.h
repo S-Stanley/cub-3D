@@ -191,6 +191,9 @@ void	init_map_res(t_game *game);
 void	init_hooks(t_game *game);
 char	*get_line_for_map(int fd, int len_map, char **map);
 char	*ft_concat(char *s1, char *s2);
+void	init_textures(t_game *game);
+void	load_textures(t_game *game);
+void	load_texture(t_game *game, t_text *text, char *path);
 
 void	check_rgb(t_game game);
 void	check_line_closed_top(t_game game, int i, int x);

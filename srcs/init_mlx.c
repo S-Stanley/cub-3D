@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:12:04 by acousini          #+#    #+#             */
-/*   Updated: 2022/04/30 15:56:14 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/10 23:19:40 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	load_texture(t_game *game, t_text *text, char *path)
 	{
 		write(2, "Texture init problem\nExit\n", 27);
 		free_game_point(game);
+		exit(1);
 	}
 	text->addr = mlx_get_data_addr(text->img, &text->bits_per_pixel,
 			&text->line_length, &text->endian);
@@ -39,6 +40,7 @@ void	load_texture(t_game *game, t_text *text, char *path)
 	{
 		write(2, "Texture init problem\nExit\n", 27);
 		free_game_point(game);
+		exit(1);
 	}
 }
 
@@ -50,6 +52,7 @@ void	load_image(t_game *game, t_text *text)
 	{
 		write(2, "Load image problem\nExit\n", 25);
 		free_game_point(game);
+		exit(1);
 	}
 	text->addr = mlx_get_data_addr(text->img,
 			&text->bits_per_pixel, &text->line_length,
@@ -58,6 +61,7 @@ void	load_image(t_game *game, t_text *text)
 	{
 		write(2, "Load image problem\nExit\n", 25);
 		free_game_point(game);
+		exit(1);
 	}
 }
 
@@ -69,6 +73,7 @@ void	load_micromap(t_game *game, t_text *text)
 	{
 		write(2, "Load image problem\nExit\n", 25);
 		free_game_point(game);
+		exit(1);
 	}
 	text->addr = mlx_get_data_addr(text->img,
 			&text->bits_per_pixel, &text->line_length,
@@ -77,6 +82,7 @@ void	load_micromap(t_game *game, t_text *text)
 	{
 		write(2, "Load image problem\nExit\n", 25);
 		free_game_point(game);
+		exit(1);
 	}
 }
 
@@ -87,15 +93,20 @@ void	init_mlx(t_game game)
 	{
 		write(2, "Mlx init problem\nExit\n", 23);
 		free_game(game);
+		exit(1);
 	}
 	game.win = mlx_new_window(game.mlx,
 			game.map_res.width, game.map_res.height, "Cub3d");
+	if (game.win == NULL)
+	{
+		write(2, "Mlx init problem\nExit\n", 23);
+		free_game_point(&game);
+		exit(1);
+	}
 	load_image(&game, &game.pixel);
 	load_micromap(&game, &game.minimap);
-	load_texture(&game, &game.ea, game.texture_ea);
-	load_texture(&game, &game.we, game.texture_we);
-	load_texture(&game, &game.so, game.texture_so);
-	load_texture(&game, &game.no, game.texture_no);
+	init_textures(&game);
+	load_textures(&game);
 	init_hooks(&game);
 	mlx_hook(game.win, 17, 1L << 17, close_win_hook_cross, &game);
 	mlx_hook(game.win, 2, 1L << 0, key_press_hook, &game);
