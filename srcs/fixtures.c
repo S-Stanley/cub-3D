@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/05/10 21:08:06 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/10 22:54:09 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,8 +209,8 @@ t_game	init_game(char *filename)
 		printf("Error\nMap parsing failed\n");
 		exit(1);
 	}
-	check_rgb(game);
 	game = get_texture(game, filename);
+	check_rgb(game);
 	check_multiple_player(game);
 	game.map = refractor_map(game.map, count_max_len_line(game.map));
 	verif_map_config(game);

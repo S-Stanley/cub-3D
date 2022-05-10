@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line_closed.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 22:24:14 by stan              #+#    #+#             */
-/*   Updated: 2022/05/10 20:58:47 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/10 22:16:41 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	check_line_closed_top(t_game game, int i, int x)
 
 void	check_line_closed_bottom(t_game game, int i, int x)
 {
+	if (i == 0)
+		return ;
 	if (game.map[i][x] == ' ')
 	{
 		if (game.map[i - 1][x] == '0')
@@ -43,7 +45,7 @@ void	check_line_closed_bottom(t_game game, int i, int x)
 			free_game(game);
 			exit(1);
 		}
-		if (game.map[i - 1][x] == ' ')
+		if (i >= 1 && game.map[i - 1][x] == ' ')
 		{
 			check_line_closed_bottom(game, i - 1, x);
 		}
@@ -73,6 +75,8 @@ void	check_line_closed_right(t_game game, int i, int x)
 
 void	check_line_closed_left(t_game game, int i, int x)
 {
+	if (i == count_len_matrice(game.map) - 1 )
+		return ;
 	if (game.map[i][x] == ' ')
 	{
 		if (game.map[i + 1][x] == '0' || game.map[i - 1][x] == '0')
