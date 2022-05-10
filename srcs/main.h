@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/05/08 18:56:04 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/11 01:40:05 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,5 +202,8 @@ char	verif_player_exist(t_game game);
 
 int		close_win_hook_cross(t_game *game);
 void	check_err_open_map(t_game game);
+void	verif_cool(t_game game);
+int		count_max_len_line(char **map);
+char	**refractor_map(char **map, int len);
 
 #endif

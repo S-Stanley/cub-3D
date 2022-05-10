@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line_closed.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 22:24:14 by stan              #+#    #+#             */
-/*   Updated: 2022/05/10 22:16:41 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/11 01:40:09 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	check_line_closed_right(t_game game, int i, int x)
 
 void	check_line_closed_left(t_game game, int i, int x)
 {
-	if (i == count_len_matrice(game.map) - 1 )
+	if (i == count_len_matrice(game.map) - 1)
 		return ;
 	if (game.map[i][x] == ' ')
 	{
