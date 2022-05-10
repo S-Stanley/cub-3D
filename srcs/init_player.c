@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 19:11:26 by sserbin           #+#    #+#             */
-/*   Updated: 2022/05/08 19:57:03 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/10 23:04:36 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	init_player_dir(t_game *game, char playerDir)
 
 void	init_player_pos(t_game *game)
 {
-	game->plr->posx = game->player_x * 20;
-	game->plr->posy = game->player_y * 20;
+	game->plr->posx = game->player_x * 20 + 0.9;
+	game->plr->posy = game->player_y * 20 + 0.9;
 	game->map[game->player_y][game->player_x] = '0';
 }
