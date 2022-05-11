@@ -14,9 +14,9 @@
 
 static int	get_final_color(t_rgb text)
 {
-	text.color1 = text.color1 % 255;
-	text.color2 = text.color2 % 255;
-	text.color3 = text.color3 % 255;
+	text.color1 = text.color1;
+	text.color2 = text.color2;
+	text.color3 = text.color3;
 	text.final_color = ((text.color1 / 16) * 16 * 16 * 16 * 16 * 16)
 		+ ((text.color1 % 16) * 16 * 16 * 16 * 16)
 		+ ((text.color2 / 16) * 16 * 16 * 16)
