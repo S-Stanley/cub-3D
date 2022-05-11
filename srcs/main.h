@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:21:01 by stan              #+#    #+#             */
-/*   Updated: 2022/05/11 01:40:05 by stan             ###   ########.fr       */
+/*   Updated: 2022/05/11 16:46:55 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,5 +208,6 @@ void	check_err_open_map(t_game game);
 void	verif_cool(t_game game);
 int		count_max_len_line(char **map);
 char	**refractor_map(char **map, int len);
+bool	check_garbage(char *filename);
 
 #endif

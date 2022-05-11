@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 15:27:25 by sserbin           #+#    #+#             */
-/*   Updated: 2022/04/03 17:12:28 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/11 16:16:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ char	*get_texture_direction(char *direction, char *filename)
 		line = get_line(fd);
 		if (!line)
 			break ;
-		line = ft_trim(line, ' ');
 		if (find_index(line, direction) >= 0)
 		{
+			line = ft_trim(line, ' ');
 			to_return = ft_strdup(&line[2]);
 			free(line);
 			return (to_return);
 		}
+		line = ft_trim(line, ' ');
 		free(line);
 	}
 	close(fd);

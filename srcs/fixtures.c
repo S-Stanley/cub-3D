@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/05/11 01:39:15 by stan             ###   ########.fr       */
+/*   Updated: 2022/05/11 16:46:30 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ t_game	init_game(char *filename)
 {
 	t_game		game;
 
+	check_garbage(filename);
 	game.player_dir = PLAYER_DIR_NO;
 	game = get_floor_and_ceil(game, filename);
 	game.map = parse_map(filename);
