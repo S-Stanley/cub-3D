@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_border.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 15:15:45 by sserbin           #+#    #+#             */
-/*   Updated: 2022/05/08 15:34:33 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:36:39 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,27 @@ bool	line_before_len_is_lower(t_game game, int i)
 	return (line_before < line);
 }
 
+void	check_space_open_map(t_game game, int i, int j)
+{
+	while (game.map[++i])
+	{
+		j = -1;
+		while (game.map[i][++j])
+		{
+			if (game.map[i][j] == '0' )
+			{
+				if (game.map[i + 1][j] == ' ' || game.map[i - 1][j] == ' '
+					|| game.map[i][j + 1] == ' ' || game.map[i][j - 1] == ' ')
+				{
+					printf("0 is next to a space at position %d %d\n", i, j);
+					free_game(game);
+					exit(1);
+				}
+			}
+		}
+	}
+}
+
 void	check_err_open_map(t_game game)
 {
 	int		i;
@@ -63,4 +84,5 @@ void	check_err_open_map(t_game game)
 			}
 		}
 	}
+	check_space_open_map(game, -1, -1);
 }
