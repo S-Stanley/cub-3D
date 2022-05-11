@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 17:03:43 by acousini          #+#    #+#             */
-/*   Updated: 2022/05/10 23:51:44 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:31:09 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ void	draw_pixel_wall(t_game *game, int pos[4], int height, float texx)
 			color = my_mlx_pixel_get(game->no, texy, texx);
 		if (game->plr->sidehit == SO)
 			color = my_mlx_pixel_get(game->so, texy, texx);
-		if (game->plr->sidehit == EA)
-			color = my_mlx_pixel_get(game->we, texy, texx);
 		if (game->plr->sidehit == WE)
+			color = my_mlx_pixel_get(game->we, texy, texx);
+		if (game->plr->sidehit == EA)
 			color = my_mlx_pixel_get(game->ea, texy, texx);
 		my_mlx_pixel_put(&game->pixel, pos[3], y, color);
 		y++;
