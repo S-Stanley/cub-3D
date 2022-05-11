@@ -1,6 +1,7 @@
 rm -rf tests/.leaks
 rm tests/.output
 mkdir tests/.leaks
+touch tests/.output
 
 echo "TEST ERRORS" >> tests/.output
 

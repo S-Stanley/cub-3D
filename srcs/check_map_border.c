@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 15:15:45 by sserbin           #+#    #+#             */
-/*   Updated: 2022/05/11 16:17:20 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:28:57 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	check_space_open_map(t_game game, int i, int j)
 				if (game.map[i + 1][j] == ' ' || game.map[i - 1][j] == ' '
 					|| game.map[i][j + 1] == ' ' || game.map[i][j - 1] == ' ')
 				{
-					printf("0 is next to a space at position %d %d\n", i, j);
+					printf("Error\n0 is next to a space at position %d %d\n",
+						i, j);
 					free_game(game);
 					exit(1);
 				}
