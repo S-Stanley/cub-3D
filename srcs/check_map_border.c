@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_border.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 15:15:45 by sserbin           #+#    #+#             */
 /*   Updated: 2022/05/11 18:28:57 by sserbin          ###   ########.fr       */
@@ -46,7 +46,9 @@ void	check_space_open_map(t_game game, int i, int j)
 		j = -1;
 		while (game.map[i][++j])
 		{
-			if (game.map[i][j] == '0' )
+			if (game.map[i][j] == '0' || game.map[i][j] == 'N'
+				|| game.map[i][j] == 'W' || game.map[i][j] == 'S'
+				|| game.map[i][j] == 'E')
 			{
 				if (game.map[i + 1][j] == ' ' || game.map[i - 1][j] == ' '
 					|| game.map[i][j + 1] == ' ' || game.map[i][j - 1] == ' ')
@@ -72,7 +74,9 @@ void	check_err_open_map(t_game game)
 		x = -1;
 		while (game.map[i][++x])
 		{
-			if (game.map[i][x] == '0')
+			if (game.map[i][x] == '0' || game.map[i][x] == 'N'
+				|| game.map[i][x] == 'W' || game.map[i][x] == 'S'
+				|| game.map[i][x] == 'E')
 			{
 				if (line_before_len_is_lower(game, i)
 					&& game.map[i][x + 1] == '1' && !game.map[i][x + 2]
