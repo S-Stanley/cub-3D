@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/05/11 01:39:15 by stan             ###   ########.fr       */
+/*   Updated: 2022/05/11 14:38:30 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ t_game	init_game(char *filename)
 	verif_map_config(game);
 	verif_map_closed(game);
 	verif_column(game);
+	recurise_map_unclose(game);
 	verif_player_exist(game);
 	game.player_dir = verif_player_exist(game);
 	verif_player_pos(&game);
