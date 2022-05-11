@@ -6,7 +6,7 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:46:16 by sserbin           #+#    #+#             */
-/*   Updated: 2022/05/11 16:46:41 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/11 17:32:30 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,18 @@ char	**get_arr_unexpected_statement(void)
 	char	**to_find;
 
 	to_find = NULL;
-	to_find = push_arr(to_find, ft_strdup("NO"));
-	to_find = push_arr(to_find, ft_strdup("SO"));
-	to_find = push_arr(to_find, ft_strdup("WE"));
-	to_find = push_arr(to_find, ft_strdup("EA"));
+	to_find = push_arr(to_find, ft_strdup("NO "));
+	to_find = push_arr(to_find, ft_strdup("NO	"));
+	to_find = push_arr(to_find, ft_strdup("SO "));
+	to_find = push_arr(to_find, ft_strdup("SO	"));
+	to_find = push_arr(to_find, ft_strdup("WE "));
+	to_find = push_arr(to_find, ft_strdup("WE	"));
+	to_find = push_arr(to_find, ft_strdup("EA "));
+	to_find = push_arr(to_find, ft_strdup("EA	"));
 	to_find = push_arr(to_find, ft_strdup("C "));
+	to_find = push_arr(to_find, ft_strdup("C	"));
 	to_find = push_arr(to_find, ft_strdup("F "));
+	to_find = push_arr(to_find, ft_strdup("F	"));
 	return (to_find);
 }
 
