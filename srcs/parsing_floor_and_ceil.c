@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 23:17:17 by stan              #+#    #+#             */
-/*   Updated: 2022/05/09 12:33:48 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:27:25 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	get_final_color(t_rgb text)
 {
-	text.color1 = text.color1 % 255;
-	text.color2 = text.color2 % 255;
-	text.color3 = text.color3 % 255;
+	text.color1 = text.color1;
+	text.color2 = text.color2;
+	text.color3 = text.color3;
 	text.final_color = ((text.color1 / 16) * 16 * 16 * 16 * 16 * 16)
 		+ ((text.color1 % 16) * 16 * 16 * 16 * 16)
 		+ ((text.color2 / 16) * 16 * 16 * 16)
