@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fixtures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stan <stan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:51:48 by stan              #+#    #+#             */
-/*   Updated: 2022/05/08 15:06:01 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/11 01:39:15 by stan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	verif_map_space(t_game game)
 				check_line_closed_top(game, i, x);
 			if (!game.map[i + 1])
 				check_line_closed_bottom(game, i, x);
-			check_line_closed_right(game, i, x);
+			if (i + 1 < count_len_matrice(game.map))
+				check_line_closed_right(game, i, x);
 			if (x == 0 && start)
 				check_line_closed_left(game, i, x);
 			x++;
@@ -138,15 +139,15 @@ t_game	init_game(char *filename)
 		exit(1);
 	}
 	game = get_texture(game, filename);
+	check_rgb(game);
+	check_multiple_player(game);
+	game.map = refractor_map(game.map, count_max_len_line(game.map));
 	verif_map_config(game);
 	verif_map_closed(game);
-	verif_map_space(game);
 	verif_column(game);
 	verif_player_exist(game);
 	game.player_dir = verif_player_exist(game);
 	verif_player_pos(&game);
-	check_rgb(game);
-	check_multiple_player(game);
 	check_err_open_map(game);
 	return (game);
 }
