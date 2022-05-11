@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_floor_and_ceil.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 23:17:17 by stan              #+#    #+#             */
-/*   Updated: 2022/05/11 16:27:25 by acousini         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:23:23 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_rgb	get_rgb_from_string(char *line, char type, t_game game)
 		handle_err("Error\nConfig file corrupt\n", line);
 	i = 0;
 	line = ft_trim(line, type);
-	line = ft_trim(line, ' ');
+	line = trim_line(line);
 	while (line[i])
 	{
 		if ((line[i] < '0' || line[i] > '9') && line[i] != ',')
@@ -102,9 +102,9 @@ t_game	get_floor_and_ceil(t_game game, char *filename)
 		line = get_line(fd);
 		if (!line)
 			break ;
-		if (find_index(line, "F ") >= 0)
+		if (find_index(line, "F ") >= 0 || find_index(line, "F	") >= 0)
 			game.floor_color = get_rgb_from_string(line, 'F', game);
-		else if (find_index(line, "C ") >= 0)
+		else if (find_index(line, "C ") >= 0 || find_index(line, "C	") >= 0)
 			game.ceil_color = get_rgb_from_string(line, 'C', game);
 		else
 			free(line);

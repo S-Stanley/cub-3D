@@ -6,11 +6,18 @@
 /*   By: sserbin <sserbin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 15:27:25 by sserbin           #+#    #+#             */
-/*   Updated: 2022/05/11 16:16:39 by sserbin          ###   ########.fr       */
+/*   Updated: 2022/05/11 17:16:05 by sserbin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+char	*trim_line(char *line)
+{
+	line = ft_trim(line, ' ');
+	line = ft_trim(line, '	');
+	return (line);
+}
 
 char	*get_texture_direction(char *direction, char *filename)
 {
@@ -28,12 +35,12 @@ char	*get_texture_direction(char *direction, char *filename)
 			break ;
 		if (find_index(line, direction) >= 0)
 		{
-			line = ft_trim(line, ' ');
+			line = trim_line(line);
 			to_return = ft_strdup(&line[2]);
 			free(line);
 			return (to_return);
 		}
-		line = ft_trim(line, ' ');
+		line = trim_line(line);
 		free(line);
 	}
 	close(fd);
