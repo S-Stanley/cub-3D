@@ -5,3 +5,5 @@ a.out
 *.a
 cub3D
 .vscode/
+tests/.leaks
+tests/.output
