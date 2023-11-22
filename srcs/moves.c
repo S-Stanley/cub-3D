@@ -6,7 +6,7 @@
 /*   By: acousini <acousini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 19:23:03 by acousini          #+#    #+#             */
-/*   Updated: 2022/05/08 19:56:56 by acousini         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:50:56 by acousini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	rotate(t_raycast *plr, float dir)
 void	moves_next(t_game *game)
 {
 	if (game->hooks.rotate_west == 1 && game->hooks.rotate_east == 0)
-		rotate(game->plr, -0.1);
+		rotate(game->plr, -0.05);
 	if (game->hooks.rotate_east == 1 && game->hooks.rotate_west == 0)
-		rotate(game->plr, 0.1);
+		rotate(game->plr, 0.05);
 	raycasting(game, game->plr);
 	draw_map_2d(game, -1, 0);
 }
@@ -55,19 +55,19 @@ void	moves_next(t_game *game)
 int	moves(t_game *game)
 {
 	if (game->hooks.north == 1 && game->hooks.south == 0)
-		move(game, 2.24800000);
+		move(game, 1);
 	if (game->hooks.south == 1 && game->hooks.north == 0)
-		move(game, -2.24800000);
+		move(game, -1);
 	if (game->hooks.east == 1 && game->hooks.west == 0)
 	{
 		rotate(game->plr, 1.5705);
-		move(game, 2.24800000);
+		move(game, 1);
 		rotate(game->plr, -1.5705);
 	}
 	if (game->hooks.east == 0 && game->hooks.west == 1)
 	{
 		rotate(game->plr, 1.5705);
-		move(game, -2.24800000);
+		move(game, -1);
 		rotate(game->plr, -1.5705);
 	}
 	moves_next(game);
